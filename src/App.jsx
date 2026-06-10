@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 /* ═══════════════════════════════════════════════════════════
-   INLINE SVG ICONS — zero external dependency
+   INLINE SVG ICONS — zero external dependency (FULLY FIXED)
 ═══════════════════════════════════════════════════════════ */
 const SVG = {
-  HTML5:`<svg viewBox="0 0 32 32"><path d="M5.9 27.2L3.655 2h24.69l-2.25 25.2L16 30z" fill="#e44d26"/><path d="M16 27.858l8.17-2.265 1.922-21.532H16z" fill="#f16529"/><path d="M16 13.407h-4.09l-.282-3.165H16V7.151H8.25l.759 9.347H16zm0 8.562l-.014.004-3.442-.929-.22-2.465H9.221l.433 4.852 6.332 1.758z" fill="#ebebeb"/><path d="M16 13.407v3.091h3.806l-.358 4.009-3.448.93v3.216l6.337-1.755.726-8.137.076-.832zm0-6.256v3.091h7.466l.215-2.261.074-.83z" fill="#fff"/></svg>`,
-  CSS3:`<svg viewBox="0 0 32 32"><path d="M5.9 27.2L3.655 2h24.69l-2.25 25.2L16 30z" fill="#1572b6"/><path d="M16 27.858l8.17-2.265 1.922-21.532H16z" fill="#33a9dc"/><path d="M16 13.191h4.09l.282-3.165H16V6.935H23.75l-.759 9.347H16zm0 8.778l-.014.004-3.442-.929-.22-2.465H9.221l.433 4.852 6.332 1.758z" fill="#ebebeb"/><path d="M16 13.191v3.091h-3.806l.358 4.009 3.448.929v3.216l-6.337-1.755-.726-8.137-.076-.832zm0 8.778v-3.216l3.228.871.22 2.465z" fill="#fff"/></svg>`,
+  HTML5:`<svg viewBox="0 0 32 32"><path d="M5.902 27.201L3.655 2h24.69l-2.25 25.2L16 30z" fill="#e44d26"/><path d="M16 27.858l8.17-2.265 1.922-21.532H16z" fill="#f16529"/><path d="M16 13.407h-4.09l-.282-3.165H16V7.151H8.25l.759 9.347H16zm0 8.562l-.014.004-3.442-.929-.22-2.465H9.221l.433 4.852 6.332 1.758z" fill="#ebebeb"/><path d="M16 13.407v3.091h3.806l-.358 4.009-3.448.93v3.216l6.337-1.755.726-8.137.076-.832zm0-6.256v3.091h7.466l.215-2.261.074-.83z" fill="#fff"/></svg>`,
+  CSS3:`<svg viewBox="0 0 32 32"><path d="M5.902 27.201L3.655 2h24.69l-2.25 25.2L16 30z" fill="#1572b6"/><path d="M16 27.858l8.17-2.265 1.922-21.532H16z" fill="#33a9dc"/><path d="M16 13.191h4.09l.282-3.165H16V6.935H23.75l-.759 9.347H16zm0 8.778l-.014.004-3.442-.929-.22-2.465H9.221l.433 4.852 6.332 1.758z" fill="#ebebeb"/><path d="M16 13.191v3.091h-3.806l.358 4.009 3.448.929v3.216l-6.337-1.755-.726-8.137-.076-.832zm0 8.778v-3.216l3.228.871.22 2.465z" fill="#fff"/></svg>`,
   JS:`<svg viewBox="0 0 32 32"><path d="M2 2h28v28H2z" fill="#f0db4f"/><path d="M20.809 23.875a2.866 2.866 0 002.6 1.6c1.09 0 1.787-.545 1.787-1.3 0-.9-.716-1.222-1.916-1.747l-.658-.282c-1.9-.809-3.16-1.822-3.16-3.964 0-1.973 1.5-3.476 3.853-3.476a3.889 3.889 0 013.742 2.107l-2.048 1.315a1.789 1.789 0 00-1.694-1.128 1.149 1.149 0 00-1.262 1.128c0 .789.487 1.109 1.615 1.6l.658.282c2.236.957 3.5 1.934 3.5 4.124 0 2.363-1.857 3.664-4.353 3.664a5.038 5.038 0 01-4.772-2.691zm-9.295.228c.413.733.789 1.353 1.693 1.353.864 0 1.41-.338 1.41-1.653v-8.947h2.52v8.984c0 2.724-1.598 3.964-3.927 3.964a4.085 4.085 0 01-3.964-2.447z" fill="#323330"/></svg>`,
   TS:`<svg viewBox="0 0 32 32"><path d="M2 2h28v28H2z" fill="#3178c6"/><path d="M14.988 22.859v2.516a6.558 6.558 0 001.7.482 11.717 11.717 0 001.989.164 9.638 9.638 0 001.931-.186 4.8 4.8 0 001.585-.6 3.065 3.065 0 001.079-1.087 3.225 3.225 0 00.4-1.666 3.19 3.19 0 00-.233-1.265 2.978 2.978 0 00-.668-.967 5.2 5.2 0 00-1.052-.775 12.081 12.081 0 00-1.381-.642q-.562-.219-.984-.416a3.78 3.78 0 01-.7-.4 1.567 1.567 0 01-.42-.45 1.07 1.07 0 01-.14-.546 1 1 0 01.14-.526 1.222 1.222 0 01.4-.4 2.014 2.014 0 01.628-.255 3.716 3.716 0 01.82-.085 5.087 5.087 0 01.713.051 5.86 5.86 0 01.706.154 5.2 5.2 0 01.665.258 3.6 3.6 0 01.563.361v-2.361a8.109 8.109 0 00-1.394-.379 9.485 9.485 0 00-1.723-.141 9.384 9.384 0 00-1.9.187 4.816 4.816 0 00-1.572.593 3.017 3.017 0 00-1.073 1.063 3.075 3.075 0 00-.394 1.607 3.133 3.133 0 00.749 2.145 5.756 5.756 0 002.255 1.44q.589.232 1.075.45a5.028 5.028 0 01.8.441 1.867 1.867 0 01.5.514 1.186 1.186 0 01.171.645 1.076 1.076 0 01-.156.573 1.3 1.3 0 01-.449.427 2.344 2.344 0 01-.7.266 4.379 4.379 0 01-.906.088 5.064 5.064 0 01-1.748-.317 5.28 5.28 0 01-1.539-.895zm-4.5-7.709h3.75v-2.16H5.003v2.16h3.737v10.822h2.748z" fill="#fff"/></svg>`,
   PY:`<svg viewBox="0 0 32 32"><path d="M15.885 2.1c-7.1 0-6.651 3.07-6.651 3.07v3.19h6.752v1H6.545S2 8.8 2 15.993s4.013 6.912 4.013 6.912H8.33v-3.361s-.13-4.013 3.9-4.013h6.762s3.772.06 3.772-3.652V5.8s.572-3.7-6.879-3.7zm-3.741 2.137a1.214 1.214 0 11-1.214 1.214 1.214 0 011.214-1.214z" fill="#387eb8"/><path d="M16.085 29.9c7.1 0 6.651-3.07 6.651-3.07v-3.19h-6.752v-1h9.441S30 23.2 30 16.007s-4.013-6.912-4.013-6.912H23.67v3.361s.13 4.013-3.9 4.013h-6.762s-3.772-.06-3.772 3.652v6.079S8.664 29.9 16.085 29.9zm3.741-2.137a1.214 1.214 0 111.214-1.214 1.214 1.214 0 01-1.214 1.214z" fill="#ffc331"/></svg>`,
@@ -42,7 +42,7 @@ const SKILLS = [
 ];
 
 /* ═══════════════════════════════════════════════════════════
-   PROJECTS — 3 images each, Unsplash themed
+   PROJECTS
 ═══════════════════════════════════════════════════════════ */
 const PROJECTS = [
   {
@@ -75,7 +75,7 @@ const PROJECTS = [
     tech:"React · Mongodb · Express · Node ",
     color:"#22d3ee",
     glow:"#22d3ee33",
-    desc:"A fully responsive gaming portfolio built with React and Tailwind. Features smooth section navigation, interactive UI components, and clean content organization optimized for readability.",
+    desc:"A fully responsive waste management platform built with MERN stack. Features smooth section navigation, interactive UI components, and clean content organization optimized for readability.",
     images:[
       "https://assets.unlayer.com/projects/0/1781036074405-Screenshot%202026-05-15%20010813.png",
       "https://assets.unlayer.com/projects/0/1781036272130-Screenshot%202026-05-15%20011439.png",
@@ -99,6 +99,24 @@ const PROJECTS = [
   },
 ];
 
+// Helper function for rounded rectangle
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    this.moveTo(x+r, y);
+    this.lineTo(x+w-r, y);
+    this.quadraticCurveTo(x+w, y, x+w, y+r);
+    this.lineTo(x+w, y+h-r);
+    this.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+    this.lineTo(x+r, y+h);
+    this.quadraticCurveTo(x, y+h, x, y+h-r);
+    this.lineTo(x, y+r);
+    this.quadraticCurveTo(x, y, x+r, y);
+    return this;
+  };
+}
+
 /* ═══════════════════════════════════════════════════════════
    SNAKE GAME ANIMATION COMPONENT
 ═══════════════════════════════════════════════════════════ */
@@ -119,22 +137,17 @@ function SnakePreview() {
       const ate = head.x===food.x && head.y===food.y;
       snake = [head, ...snake.slice(0, ate? undefined : -1)];
       if(ate){score++; rFood();}
-      // auto-steer: simple path-follow
       const dx = food.x-snake[0].x, dy = food.y-snake[0].y;
       if(Math.abs(dx)>Math.abs(dy)) dir = {x:dx>0?1:-1,y:0};
       else dir = {x:0,y:dy>0?1:-1};
-      // draw
       ctx.fillStyle="#050014"; ctx.fillRect(0,0,W,H);
-      // grid dots
       ctx.fillStyle="rgba(167,139,250,0.08)";
       for(let x=0;x<14;x++) for(let y=0;y<9;y++) ctx.fillRect(x*CELL+9,y*CELL+5,2,2);
-      // food pulse
       const pulse = 0.7+0.3*Math.sin(Date.now()/300);
       ctx.shadowBlur=12*pulse; ctx.shadowColor="#f472b6";
       ctx.fillStyle="#f472b6";
       ctx.beginPath(); ctx.arc(food.x*CELL+CELL/2+9,food.y*CELL+CELL/2+5,5*pulse,0,Math.PI*2); ctx.fill();
       ctx.shadowBlur=0;
-      // snake
       snake.forEach((s,i)=>{
         const t=i/snake.length;
         const r=Math.round(34+t*(168-34)), g=Math.round(211+t*(85-211)), b=Math.round(238+t*(247-238));
@@ -144,7 +157,6 @@ function SnakePreview() {
         ctx.roundRect(s.x*CELL+2+9,s.y*CELL+2+5,CELL-4,CELL-4,i===0?6:4);
         ctx.fill(); ctx.shadowBlur=0;
       });
-      // score
       ctx.fillStyle="#a78bfa"; ctx.font="bold 13px monospace";
       ctx.fillText(`SCORE: ${score}`,8,16);
       id=requestAnimationFrame(tick);
@@ -156,13 +168,35 @@ function SnakePreview() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PROJECT CARD — book-flip images
+   PROJECT CARD — 3D ROTATION EFFECT
 ═══════════════════════════════════════════════════════════ */
 function ProjectCard({proj, idx}) {
   const [imgIdx, setImgIdx] = useState(0);
   const [flipping, setFlipping] = useState(false);
   const [showSnake, setShowSnake] = useState(proj.hasSnake);
   const [hov, setHov] = useState(false);
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateXVal = ((y - centerY) / centerY) * -10;
+    const rotateYVal = ((x - centerX) / centerX) * 10;
+    setRotateX(rotateXVal);
+    setRotateY(rotateYVal);
+  };
+
+  const handleMouseLeave = () => {
+    setHov(false);
+    setRotateX(0);
+    setRotateY(0);
+  };
 
   const nextImg = () => {
     if(flipping) return;
@@ -188,27 +222,30 @@ function ProjectCard({proj, idx}) {
 
   return (
     <div
+      ref={cardRef}
       onMouseEnter={()=>setHov(true)}
-      onMouseLeave={()=>setHov(false)}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
       style={{
         borderRadius:24,
         background: hov
-          ? `linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03))`
-          : `linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))`,
-        border:`1.5px solid ${hov ? proj.color+"66" : "rgba(255,255,255,0.07)"}`,
-        transform: hov ? "translateY(-14px) scale(1.02)" : "translateY(0) scale(1)",
-        transition:"all 0.45s cubic-bezier(.34,1.56,.64,1)",
-        boxShadow: hov ? `0 24px 72px ${proj.glow}, 0 0 0 1px ${proj.color}22` : "0 4px 24px rgba(0,0,0,0.4)",
+          ? `linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))`
+          : `linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))`,
+        border:`1.5px solid ${hov ? proj.color+"88" : "rgba(255,255,255,0.1)"}`,
+        transform: hov 
+          ? `translateY(-14px) scale(1.02) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)` 
+          : "translateY(0) scale(1) perspective(1000px) rotateX(0deg) rotateY(0deg)",
+        transition:"transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.3s",
+        boxShadow: hov ? `0 30px 80px ${proj.glow}, 0 0 0 1px ${proj.color}44` : "0 8px 32px rgba(0,0,0,0.4)",
         overflow:"hidden",
         cursor:"pointer",
+        backdropFilter: "blur(4px)",
       }}
     >
-      {/* Image / Snake viewer */}
       <div
-        style={{position:"relative", height:350, overflow:"hidden", background:"#0a0028"}}
+        style={{position:"relative", height:350, overflow:"hidden", background:"rgba(5,0,20,0.5)"}}
         onClick={nextImg}
       >
-        {/* Book-flip animation */}
         <div style={{
           position:"absolute",inset:0,
           transform: flipping ? "perspective(800px) rotateY(-90deg)" : "perspective(800px) rotateY(0deg)",
@@ -228,11 +265,10 @@ function ProjectCard({proj, idx}) {
           )}
           <div style={{
             position:"absolute",inset:0,
-            background:`linear-gradient(to bottom, transparent 40%, rgba(5,0,30,0.92))`,
+            background:`linear-gradient(to bottom, transparent 30%, rgba(5,0,30,0.95))`,
           }}/>
         </div>
 
-        {/* Click hint */}
         <div style={{
           position:"absolute",bottom:10,right:12,
           fontSize:11,color:"rgba(255,255,255,0.5)",
@@ -244,7 +280,6 @@ function ProjectCard({proj, idx}) {
           {showSnake ? "▶ click for screenshots" : `${imgIdx+1}/${proj.images.length} · click →`}
         </div>
 
-        {/* Nav dots */}
         {!showSnake && (
           <div style={{position:"absolute",bottom:10,left:"50%",transform:"translateX(-50%)",display:"flex",gap:5}}>
             {proj.images.map((_,i)=>(
@@ -257,7 +292,6 @@ function ProjectCard({proj, idx}) {
           </div>
         )}
 
-        {/* Tech badge */}
         <span style={{
           position:"absolute",top:12,left:12,
           fontSize:10,padding:"4px 10px",borderRadius:20,
@@ -268,7 +302,6 @@ function ProjectCard({proj, idx}) {
           {proj.tech}
         </span>
 
-        {/* Prev/next arrows */}
         {!showSnake && (
           <>
             <button onClick={e=>{e.stopPropagation();prevImg();}} style={{
@@ -295,8 +328,7 @@ function ProjectCard({proj, idx}) {
         )}
       </div>
 
-      {/* Card body */}
-      <div style={{padding:"20px 22px 24px"}}>
+      <div style={{padding:"20px 22px 24px", background:"rgba(5,0,20,0.3)"}}>
         <div style={{display:"flex",alignItems:"flex-start",gap:10,marginBottom:10}}>
           <div style={{
             width:36,height:36,borderRadius:10,
@@ -305,7 +337,7 @@ function ProjectCard({proj, idx}) {
             display:"flex",alignItems:"center",justifyContent:"center",
             fontSize:16,flexShrink:0,
           }}>
-            {idx===0?"🐍":idx===1?"🏠":idx===2?"🎮":"👁️"}
+            {idx===0?"🐍":idx===1?"🏠":idx===2?"🗑️":"👁️"}
           </div>
           <h3 style={{
             fontSize:16,fontWeight:800,margin:0,lineHeight:1.3,
@@ -320,7 +352,7 @@ function ProjectCard({proj, idx}) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PROJECTS CAROUSEL — horizontal sliding
+   PROJECTS CAROUSEL
 ═══════════════════════════════════════════════════════════ */
 function ProjectsCarousel() {
   const [curr, setCurr] = useState(0);
@@ -341,7 +373,6 @@ function ProjectsCarousel() {
 
   return (
     <div style={{position:"relative"}}>
-      {/* Slide track */}
       <div
         onMouseDown={onDragStart} onMouseUp={onDragEnd}
         onTouchStart={onDragStart} onTouchEnd={onDragEnd}
@@ -360,7 +391,6 @@ function ProjectsCarousel() {
         </div>
       </div>
 
-      {/* Navigation */}
       <div style={{
         display:"flex",alignItems:"center",justifyContent:"center",gap:16,marginTop:24,
       }}>
@@ -380,7 +410,6 @@ function ProjectsCarousel() {
         <NavBtn onClick={next} dir="right"/>
       </div>
 
-      {/* 4-card mini preview below on wide screens */}
       <div style={{
         display:"grid",
         gridTemplateColumns:"repeat(4,1fr)",
@@ -448,7 +477,6 @@ function BlackHoleCanvas() {
     resize();
     window.addEventListener("resize",resize);
 
-    // Planet state
     const planet = { angle:0, orbitA:220, orbitB:60, cx:0, cy:0, r:14, inHole:false, reset:0 };
 
     const draw=()=>{
@@ -457,7 +485,6 @@ function BlackHoleCanvas() {
       const cx=c.width*0.72, cy=c.height*0.38;
       planet.cx=cx; planet.cy=cy;
 
-      // ── Accretion disk glow ──
       const diskR = 90;
       [-1,1].forEach(side=>{
         const g=ctx.createRadialGradient(cx,cy,diskR*0.3,cx,cy,diskR);
@@ -473,7 +500,6 @@ function BlackHoleCanvas() {
         ctx.restore();
       });
 
-      // ── Outer glow rings ──
       for(let ring=3;ring>=1;ring--){
         ctx.beginPath();
         ctx.arc(cx,cy,diskR+ring*18,0,Math.PI*2);
@@ -482,7 +508,6 @@ function BlackHoleCanvas() {
         ctx.stroke();
       }
 
-      // ── Photon ring ──
       const pr=ctx.createRadialGradient(cx,cy,60,cx,cy,76);
       pr.addColorStop(0,"rgba(255,200,80,0.5)");
       pr.addColorStop(0.5,"rgba(255,140,0,0.25)");
@@ -493,7 +518,6 @@ function BlackHoleCanvas() {
       ctx.fillStyle=pr; ctx.fill();
       ctx.restore();
 
-      // ── Black hole center ──
       const bhg=ctx.createRadialGradient(cx,cy,0,cx,cy,60);
       bhg.addColorStop(0,"rgba(0,0,0,1)");
       bhg.addColorStop(0.7,"rgba(5,0,20,0.95)");
@@ -501,7 +525,6 @@ function BlackHoleCanvas() {
       ctx.beginPath(); ctx.arc(cx,cy,60,0,Math.PI*2);
       ctx.fillStyle=bhg; ctx.fill();
 
-      // ── Spiral stars / dust ──
       for(let i=0;i<80;i++){
         const ang=i*0.43+t*0.5;
         const r2=30+i*2.2;
@@ -513,7 +536,6 @@ function BlackHoleCanvas() {
         ctx.fillStyle=`rgba(200,180,255,${op})`; ctx.fill();
       }
 
-      // ── PLANET spiraling into black hole ──
       if(!planet.inHole){
         planet.angle+=0.012;
         const shrink=1-Math.max(0,Math.min(1,(planet.angle-6)/10));
@@ -522,7 +544,6 @@ function BlackHoleCanvas() {
         const py=cy+Math.sin(planet.angle)*r3*0.42;
         const ps=planet.r*shrink;
 
-        // Planet glow
         ctx.shadowBlur=20*shrink; ctx.shadowColor="#22d3ee";
         const pg=ctx.createRadialGradient(px,py,0,px,py,ps*2);
         pg.addColorStop(0,"rgba(34,211,238,0.9)");
@@ -531,7 +552,6 @@ function BlackHoleCanvas() {
         ctx.beginPath(); ctx.arc(px,py,ps*1.6,0,Math.PI*2);
         ctx.fillStyle=pg; ctx.fill(); ctx.shadowBlur=0;
 
-        // Planet body
         const pbg=ctx.createRadialGradient(px-ps*0.3,py-ps*0.3,0,px,py,ps);
         pbg.addColorStop(0,"#7dd3fc");
         pbg.addColorStop(0.5,"#3b82f6");
@@ -539,7 +559,6 @@ function BlackHoleCanvas() {
         ctx.beginPath(); ctx.arc(px,py,ps,0,Math.PI*2);
         ctx.fillStyle=pbg; ctx.fill();
 
-        // Ring around planet
         if(shrink>0.4){
           ctx.save();
           ctx.translate(px,py); ctx.scale(1,0.3); ctx.translate(-px,-py);
@@ -552,7 +571,6 @@ function BlackHoleCanvas() {
       } else if(t>planet.reset){
         planet.inHole=false; planet.angle=0;
       } else {
-        // implosion flash
         const fl=Math.max(0,1-(t-planet.reset+2)*3);
         if(fl>0){
           ctx.beginPath(); ctx.arc(cx,cy,60*fl,0,Math.PI*2);
@@ -560,7 +578,6 @@ function BlackHoleCanvas() {
         }
       }
 
-      // ── Lens gravitational lines ──
       ctx.save();
       for(let a=0;a<12;a++){
         const ang2=a*(Math.PI/6)+t*0.1;
@@ -587,7 +604,7 @@ function BlackHoleCanvas() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   STAR FIELD — fixed positioning with proper bounds
+   STAR FIELD
 ═══════════════════════════════════════════════════════════ */
 function StarField() {
   const canvasRef = useRef(null);
@@ -738,6 +755,115 @@ function SkillChip({icon}) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   HEXAGON PROFILE IMAGE COMPONENT
+═══════════════════════════════════════════════════════════ */
+function HexagonProfile() {
+  const [hover, setHover] = useState(false);
+  return (
+    <div style={{
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      marginBottom: 30,
+    }}>
+      <div
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          width: 130,
+          height: 130,
+          position: "relative",
+          cursor: "pointer",
+          transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+          transform: hover ? "scale(1.08) rotate(3deg)" : "scale(1) rotate(0deg)",
+        }}
+      >
+        {/* Hexagon shape using SVG */}
+        <svg width="130" height="130" viewBox="0 0 130 130" style={{ position: "absolute", top: 0, left: 0, zIndex: 2 }}>
+          <defs>
+            <clipPath id="hexagonClip">
+              <polygon points="65,0 126,32.5 126,97.5 65,130 4,97.5 4,32.5" />
+            </clipPath>
+            <radialGradient id="hexGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.8"/>
+              <stop offset="100%" stopColor="#4f46e5" stopOpacity="0"/>
+            </radialGradient>
+          </defs>
+          <polygon points="65,0 126,32.5 126,97.5 65,130 4,97.5 4,32.5" fill="none" stroke="#a78bfa" strokeWidth="3"/>
+        </svg>
+        
+        {/* Image with hexagon clip */}
+        <div style={{
+          position: "absolute",
+          top: 3,
+          left: 3,
+          width: 124,
+          height: 124,
+          clipPath: "polygon(62px 3px, 123px 35.5px, 123px 100.5px, 62px 133px, 7px 100.5px, 7px 35.5px)",
+          overflow: "hidden",
+          borderRadius: 0,
+        }}>
+          <img 
+            src="https://assets.unlayer.com/projects/0/1781066867183-Picture1.jpg" 
+            alt="Ashis Kumar Mohanty"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.4s ease",
+              transform: hover ? "scale(1.1)" : "scale(1)",
+            }}
+          />
+        </div>
+        
+        {/* Glow effect on hover */}
+        {hover && (
+          <div style={{
+            position: "absolute",
+            top: -10,
+            left: -10,
+            width: 150,
+            height: 150,
+            background: "radial-gradient(circle, rgba(167,139,250,0.4), transparent)",
+            borderRadius: "50%",
+            zIndex: 1,
+            pointerEvents: "none",
+            animation: "pulse 1s ease-in-out infinite",
+          }}/>
+        )}
+      </div>
+      
+      <div style={{
+        textAlign: "center",
+        marginTop: 15,
+        transition: "all 0.3s ease",
+        transform: hover ? "translateY(-3px)" : "translateY(0)",
+      }}>
+        <h3 style={{
+          fontSize: 18,
+          fontWeight: 700,
+          background: "linear-gradient(135deg, #fff, #a78bfa)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          marginBottom: 4,
+        }}>Ashis Kumar Mohanty</h3>
+        <p style={{
+          fontSize: 12,
+          color: "#a78bfa",
+          letterSpacing: "0.08em",
+          display: "inline-block",
+          padding: "2px 12px",
+          borderRadius: 20,
+          background: "rgba(167,139,250,0.12)",
+          border: "1px solid rgba(167,139,250,0.3)",
+        }}>Full Stack Developer</p>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    NAV
 ═══════════════════════════════════════════════════════════ */
 function Nav() {
@@ -825,23 +951,38 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         html{scroll-behavior:smooth;}
-        body{overflow-x:hidden;}
+        body{overflow-x:hidden;background:#030010;}
         @keyframes float1{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-18px) rotate(5deg)}}
         @keyframes float2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(-6deg)}}
         @keyframes float3{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-22px) rotate(7deg)}}
-        @keyframes pulse{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:.85;transform:scale(1.12)}}
+        @keyframes pulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
         @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
         @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes matrix{0%{background-position:0% 0%}100%{background-position:100% 100%}}
         @keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         @keyframes shimmer{0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}
         ::-webkit-scrollbar{width:4px}
         ::-webkit-scrollbar-track{background:#030010}
         ::-webkit-scrollbar-thumb{background:linear-gradient(#7c3aed,#4f46e5);border-radius:4px}
+        .matrix-bg {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+          opacity: 0.06;
+          background-image: repeating-linear-gradient(0deg, rgba(100, 100, 255, 0.2) 0px, rgba(100, 100, 255, 0.2) 1px, transparent 1px, transparent 2px);
+          background-size: 100% 3px;
+          animation: matrix 20s linear infinite;
+        }
       `}</style>
 
       <StarField/>
+      <div className="matrix-bg"></div>
       <Nav/>
 
       {/* ══ HERO ══════════════════════════════════════════════ */}
@@ -849,16 +990,13 @@ export default function App() {
         minHeight:"100vh",display:"flex",alignItems:"center",
         padding:"80px 6% 60px",position:"relative",overflow:"hidden",
       }}>
-        {/* Black hole lives in hero */}
         <div style={{position:"absolute",inset:0,zIndex:1}}>
           <BlackHoleCanvas/>
         </div>
 
-        {/* BG orbs */}
         <div style={{position:"absolute",width:600,height:600,borderRadius:"50%",filter:"blur(120px)",background:"radial-gradient(circle,#7c3aed33,transparent 70%)",top:"-20%",left:"10%",animation:"pulse 9s ease-in-out infinite",pointerEvents:"none"}}/>
         <div style={{position:"absolute",width:400,height:400,borderRadius:"50%",filter:"blur(100px)",background:"radial-gradient(circle,#4f46e533,transparent 70%)",bottom:"5%",left:"-5%",animation:"pulse 7s ease-in-out infinite 2s",pointerEvents:"none"}}/>
 
-        {/* Floating tech icons */}
         <div style={{position:"absolute",inset:0,pointerEvents:"none",zIndex:2}}>
           {FLOATS.map((ic,i)=>{
             const sk=SKILLS.find(s=>s.name===ic.k);
@@ -880,8 +1018,12 @@ export default function App() {
           })}
         </div>
 
-        {/* Hero text */}
-        <div style={{position:"relative",zIndex:3,maxWidth:580}}>
+        <div style={{position:"relative",zIndex:3, maxWidth:680, margin: "0 auto", width: "100%"}}>
+          {/* Hexagon Profile Image - Now at the top of hero section */}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <HexagonProfile />
+          </div>
+
           <div style={{
             display:"inline-flex",alignItems:"center",gap:8,
             padding:"6px 18px",borderRadius:99,
@@ -890,6 +1032,7 @@ export default function App() {
             fontSize:11,color:"#c4b5fd",marginBottom:26,
             animation:"slideUp 0.9s ease both",letterSpacing:"0.08em",
             backdropFilter:"blur(8px)",
+            marginTop: 0,
           }}>
             <span style={{width:7,height:7,borderRadius:"50%",background:"#a78bfa",display:"inline-block",animation:"pulse 2s ease-in-out infinite"}}/>
             Full Stack Developer Portfolio
@@ -897,7 +1040,7 @@ export default function App() {
 
           <h1 style={{
             fontSize:"clamp(2.4rem,5vw,3.9rem)",fontWeight:900,lineHeight:1.08,
-            marginBottom:22,animation:"slideUp 0.9s ease 0.1s both",
+            marginBottom:22,animation:"slideUp 0.9s ease 0.1s both",textAlign:"center",
           }}>
             Providing the{" "}
             <span style={{
@@ -906,17 +1049,19 @@ export default function App() {
               WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
             }}>best</span>
             <br/>
-            <Typewriter words={["project experience.","software solutions.","creative ideas.","web applications."]}/>
+            <span style={{display:"inline-block"}}>
+              <Typewriter words={["project experience.","software solutions.","creative ideas.","web applications."]}/>
+            </span>
           </h1>
 
           <p style={{
             fontSize:15,lineHeight:1.8,color:"#94a3b8",marginBottom:38,
-            animation:"slideUp 0.9s ease 0.2s both",maxWidth:480,
+            animation:"slideUp 0.9s ease 0.2s both",textAlign:"center",
           }}>
             I'm <strong style={{color:"#e2e8f0",fontWeight:700}}>Ashis Kumar Mohanty</strong> — B.Tech CSE (2026) & Full Stack Engineer. Passionate about building impactful, pixel-perfect web applications.
           </p>
 
-          <div style={{display:"flex",gap:14,flexWrap:"wrap",animation:"slideUp 0.9s ease 0.3s both"}}>
+          <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",animation:"slideUp 0.9s ease 0.3s both"}}>
             <button
               onClick={()=>document.getElementById("projects")?.scrollIntoView({behavior:"smooth"})}
               style={{
@@ -942,8 +1087,7 @@ export default function App() {
             >✉ Contact Me</a>
           </div>
 
-          {/* Stats row */}
-          <div style={{display:"flex",gap:28,marginTop:44,animation:"slideUp 0.9s ease 0.45s both"}}>
+          <div style={{display:"flex",gap:28,justifyContent:"center",marginTop:44,animation:"slideUp 0.9s ease 0.45s both"}}>
             {[{n:"8.18",l:"CGPA"},  {n:"10+",l:"Projects"}, {n:"4+",l:"Internship"}].map(s=>(
               <div key={s.l}>
                 <div style={{
@@ -951,7 +1095,7 @@ export default function App() {
                   background:"linear-gradient(135deg,#a78bfa,#60a5fa)",
                   WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
                 }}>{s.n}</div>
-                <div style={{fontSize:11,color:"#6b7280",letterSpacing:"0.08em",marginTop:2}}>{s.l}</div>
+                <div style={{fontSize:11,color:"#6b7280",letterSpacing:"0.08em",marginTop:2,textAlign:"center"}}>{s.l}</div>
               </div>
             ))}
           </div>
@@ -1008,9 +1152,11 @@ export default function App() {
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:22,maxWidth:1000,margin:"0 auto"}}>
           {[
             {period:"2025 – 2026",title:"Software Engineer Intern",place:"ASP OL MEDIA PVT. LTD, Nagpur",desc:"Email marketing tools (SMTP, BIRD, UNLAYER) — designed & tested templates for international clients.",color:"#a78bfa",icon:"💼"},
-            {period:"2022 – 2026",title:"B.Tech – Computer Science Eng.",place:"Gandhi Institute for Technology, Bhubaneswar",desc:"CGPA 8.17 · DSA, DBMS, OS, Networking, and modern full-stack web development.",color:"#60a5fa",icon:"🎓"},
+            {period:"2025",title:"Scientific Calculator",place:"Techzex Pvt. Ltd",desc:"The central aim of the project was to test the hypothesis that providing a calculator would improve students' performance in those parts of the undergraduate first-year that relied on formal reasoning skills.",color:"#22d3ee",icon:"📱"},
+            {period:"2024",title:"Object Detection Model",place:"CTTC, Bhubaneswar",desc:"Created a model to detect objects by collecting data. Collected 200 photos of one object, total 5 different types of objects. Used webcam for better visualization and proper lighting.",color:"#f472b6",icon:"👁️"},
+            {period:"2022 – 2026",title:"B.Tech – Computer Science Eng.",place:"Gandhi Institute for Technology, Bhubaneswar",desc:"CGPA 8.18 · DSA, DBMS, OS, Networking, and modern full-stack web development.",color:"#60a5fa",icon:"🎓"},
           ].map((item,i)=>(
-            <Reveal key={i} delay={i*0.15}>
+            <Reveal key={i} delay={i*0.1}>
               <JourneyCard item={item}/>
             </Reveal>
           ))}
@@ -1062,7 +1208,7 @@ export default function App() {
           <div style={{textAlign:"center",marginBottom:52}}>
             <Tag>✦ What I've Built ✦</Tag>
             <h2 style={secHead}>My Projects</h2>
-            <p style={{color:"#6b7280",marginTop:12,fontSize:15}}>Click cards to flip through screenshots · Swipe or drag to browse</p>
+            <p style={{color:"#6b7280",marginTop:12,fontSize:15}}>Hover over cards for 3D effect · Click to flip through screenshots</p>
           </div>
         </Reveal>
         <Reveal delay={0.1}>
@@ -1135,7 +1281,6 @@ export default function App() {
           ))}
         </div>
 
-        {/* Footer */}
         <div style={{
           borderTop:"1px solid rgba(255,255,255,0.07)",
           padding:"32px 0",
@@ -1179,11 +1324,12 @@ function JourneyCard({item}) {
   return (
     <div onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{
       padding:28,borderRadius:20,
-      background:h?"rgba(255,255,255,0.06)":"rgba(255,255,255,0.025)",
-      border:`1px solid ${h?item.color+"55":"rgba(255,255,255,0.07)"}`,
+      background:h?"rgba(255,255,255,0.08)":"rgba(255,255,255,0.03)",
+      border:`1px solid ${h?item.color+"66":"rgba(255,255,255,0.08)"}`,
       transition:"all 0.35s ease",
       transform:h?"translateY(-5px)":"translateY(0)",
       boxShadow:h?`0 14px 44px ${item.color}22`:"none",
+      backdropFilter:"blur(4px)",
     }}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}}>
         <div style={{fontSize:28}}>{item.icon}</div>
@@ -1205,11 +1351,12 @@ function CertCard({cert}) {
   return (
     <div onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{
       padding:"22px 30px",borderRadius:18,textAlign:"center",minWidth:240,
-      background:h?`${cert.color}12`:"rgba(255,255,255,0.025)",
-      border:`1px solid ${h?cert.color+"55":"rgba(255,255,255,0.07)"}`,
+      background:h?`${cert.color}15`:"rgba(255,255,255,0.03)",
+      border:`1px solid ${h?cert.color+"66":"rgba(255,255,255,0.08)"}`,
       transition:"all 0.35s ease",
       transform:h?"translateY(-5px) scale(1.03)":"translateY(0) scale(1)",
       boxShadow:h?`0 12px 36px ${cert.color}22`:"none",
+      backdropFilter:"blur(4px)",
     }}>
       <div style={{fontSize:30,marginBottom:10}}>{cert.icon}</div>
       <h3 style={{fontSize:15,fontWeight:700,color:"#e2e8f0",marginBottom:6}}>{cert.title}</h3>
@@ -1227,11 +1374,12 @@ function ContactCard({c}) {
         padding:"22px 26px",borderRadius:18,
         display:"flex",alignItems:"center",gap:14,
         textDecoration:"none",minWidth:230,
-        background:h?`${c.color}12`:"rgba(255,255,255,0.025)",
-        border:`1px solid ${h?c.color+"55":"rgba(255,255,255,0.07)"}`,
+        background:h?`${c.color}15`:"rgba(255,255,255,0.03)",
+        border:`1px solid ${h?c.color+"66":"rgba(255,255,255,0.08)"}`,
         transition:"all 0.35s ease",
         transform:h?"translateY(-5px)":"translateY(0)",
         boxShadow:h?`0 12px 36px ${c.color}22`:"none",
+        backdropFilter:"blur(4px)",
       }}>
       <div style={{
         width:44,height:44,borderRadius:12,flexShrink:0,
