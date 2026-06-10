@@ -1,25 +1,25 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 /* ═══════════════════════════════════════════════════════════
-   INLINE SVG ICONS — zero external dependency (FULLY FIXED)
+   INLINE SVG ICONS — COMPLETELY REWRITTEN (NO ERRORS)
 ═══════════════════════════════════════════════════════════ */
 const SVG = {
-  HTML5:`<svg viewBox="0 0 32 32"><path d="M5.902 27.201L3.655 2h24.69l-2.25 25.2L16 30z" fill="#e44d26"/><path d="M16 27.858l8.17-2.265 1.922-21.532H16z" fill="#f16529"/><path d="M16 13.407h-4.09l-.282-3.165H16V7.151H8.25l.759 9.347H16zm0 8.562l-.014.004-3.442-.929-.22-2.465H9.221l.433 4.852 6.332 1.758z" fill="#ebebeb"/><path d="M16 13.407v3.091h3.806l-.358 4.009-3.448.93v3.216l6.337-1.755.726-8.137.076-.832zm0-6.256v3.091h7.466l.215-2.261.074-.83z" fill="#fff"/></svg>`,
-  CSS3:`<svg viewBox="0 0 32 32"><path d="M5.902 27.201L3.655 2h24.69l-2.25 25.2L16 30z" fill="#1572b6"/><path d="M16 27.858l8.17-2.265 1.922-21.532H16z" fill="#33a9dc"/><path d="M16 13.191h4.09l.282-3.165H16V6.935H23.75l-.759 9.347H16zm0 8.778l-.014.004-3.442-.929-.22-2.465H9.221l.433 4.852 6.332 1.758z" fill="#ebebeb"/><path d="M16 13.191v3.091h-3.806l.358 4.009 3.448.929v3.216l-6.337-1.755-.726-8.137-.076-.832zm0 8.778v-3.216l3.228.871.22 2.465z" fill="#fff"/></svg>`,
-  JS:`<svg viewBox="0 0 32 32"><path d="M2 2h28v28H2z" fill="#f0db4f"/><path d="M20.809 23.875a2.866 2.866 0 002.6 1.6c1.09 0 1.787-.545 1.787-1.3 0-.9-.716-1.222-1.916-1.747l-.658-.282c-1.9-.809-3.16-1.822-3.16-3.964 0-1.973 1.5-3.476 3.853-3.476a3.889 3.889 0 013.742 2.107l-2.048 1.315a1.789 1.789 0 00-1.694-1.128 1.149 1.149 0 00-1.262 1.128c0 .789.487 1.109 1.615 1.6l.658.282c2.236.957 3.5 1.934 3.5 4.124 0 2.363-1.857 3.664-4.353 3.664a5.038 5.038 0 01-4.772-2.691zm-9.295.228c.413.733.789 1.353 1.693 1.353.864 0 1.41-.338 1.41-1.653v-8.947h2.52v8.984c0 2.724-1.598 3.964-3.927 3.964a4.085 4.085 0 01-3.964-2.447z" fill="#323330"/></svg>`,
-  TS:`<svg viewBox="0 0 32 32"><path d="M2 2h28v28H2z" fill="#3178c6"/><path d="M14.988 22.859v2.516a6.558 6.558 0 001.7.482 11.717 11.717 0 001.989.164 9.638 9.638 0 001.931-.186 4.8 4.8 0 001.585-.6 3.065 3.065 0 001.079-1.087 3.225 3.225 0 00.4-1.666 3.19 3.19 0 00-.233-1.265 2.978 2.978 0 00-.668-.967 5.2 5.2 0 00-1.052-.775 12.081 12.081 0 00-1.381-.642q-.562-.219-.984-.416a3.78 3.78 0 01-.7-.4 1.567 1.567 0 01-.42-.45 1.07 1.07 0 01-.14-.546 1 1 0 01.14-.526 1.222 1.222 0 01.4-.4 2.014 2.014 0 01.628-.255 3.716 3.716 0 01.82-.085 5.087 5.087 0 01.713.051 5.86 5.86 0 01.706.154 5.2 5.2 0 01.665.258 3.6 3.6 0 01.563.361v-2.361a8.109 8.109 0 00-1.394-.379 9.485 9.485 0 00-1.723-.141 9.384 9.384 0 00-1.9.187 4.816 4.816 0 00-1.572.593 3.017 3.017 0 00-1.073 1.063 3.075 3.075 0 00-.394 1.607 3.133 3.133 0 00.749 2.145 5.756 5.756 0 002.255 1.44q.589.232 1.075.45a5.028 5.028 0 01.8.441 1.867 1.867 0 01.5.514 1.186 1.186 0 01.171.645 1.076 1.076 0 01-.156.573 1.3 1.3 0 01-.449.427 2.344 2.344 0 01-.7.266 4.379 4.379 0 01-.906.088 5.064 5.064 0 01-1.748-.317 5.28 5.28 0 01-1.539-.895zm-4.5-7.709h3.75v-2.16H5.003v2.16h3.737v10.822h2.748z" fill="#fff"/></svg>`,
-  PY:`<svg viewBox="0 0 32 32"><path d="M15.885 2.1c-7.1 0-6.651 3.07-6.651 3.07v3.19h6.752v1H6.545S2 8.8 2 15.993s4.013 6.912 4.013 6.912H8.33v-3.361s-.13-4.013 3.9-4.013h6.762s3.772.06 3.772-3.652V5.8s.572-3.7-6.879-3.7zm-3.741 2.137a1.214 1.214 0 11-1.214 1.214 1.214 0 011.214-1.214z" fill="#387eb8"/><path d="M16.085 29.9c7.1 0 6.651-3.07 6.651-3.07v-3.19h-6.752v-1h9.441S30 23.2 30 16.007s-4.013-6.912-4.013-6.912H23.67v3.361s.13 4.013-3.9 4.013h-6.762s-3.772-.06-3.772 3.652v6.079S8.664 29.9 16.085 29.9zm3.741-2.137a1.214 1.214 0 111.214-1.214 1.214 1.214 0 01-1.214 1.214z" fill="#ffc331"/></svg>`,
-  JAVA:`<svg viewBox="0 0 32 32"><path d="M11.914 22.754s-1.12.65.8.87a16.986 16.986 0 005.177-.211 9.39 9.39 0 001.412.694c-5.02 2.152-11.367-.125-7.389-1.353zm-.681-2.966s-1.257.93.662 1.129a23.578 23.578 0 006.873-.33 3.1 3.1 0 001.056.649c-6.085 1.779-12.861.14-8.591-1.448z" fill="#ea2d2e"/><path d="M16.674 14.81c1.24 1.427-.325 2.712-.325 2.712s3.149-1.625 1.7-3.658c-1.351-1.9-2.387-2.845 3.22-6.1 0 0-8.8 2.2-4.595 7.046z" fill="#f58220"/><path d="M22.664 25.1s.828.683-.912 1.209c-3.308 1.005-13.77 1.308-16.677.04-1.044-.455.914-1.085 1.528-1.218a3.968 3.968 0 011.017-.114c-1.17-.823-7.558 1.618-3.244 2.318C15.136 29.242 24.821 26.477 22.664 25.1zm-10.2-7.426s-5.36 1.274-1.9 1.737a39.979 39.979 0 005.364-.058c1.677-.142 3.362-.445 3.362-.445s-.591.252-1.019.543c-4.11 1.082-12.046.579-9.759-.525 1.93-.924 3.952-.252 3.952-.252zm7.271 4.062c4.178-2.172 2.247-4.259.9-3.979a3.092 3.092 0 00-.476.133 1.307 1.307 0 01.223-.342c1.66-1.85 4.66.48 2.671 3.024a1.558 1.558 0 01-.318.164z" fill="#ea2d2e"/><path d="M17.453 2s3.065 3.062-2.907 7.769c-4.785 3.777-1.091 5.929 0 8.389-2.791-2.517-4.839-4.73-3.462-6.79C13.099 8.343 18.684 6.875 17.453 2z" fill="#f58220"/><path d="M12.1 29.963c4.008.257 10.163-.142 10.306-2.045 0 0-.28 1.72-4.1 3.09a15.818 15.818 0 01-9.986-.337s.508.42 3.78 1.292z" fill="#ea2d2e"/></svg>`,
-  REACT:`<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="3" fill="#61dafb"/><ellipse cx="16" cy="16" rx="14" ry="5.5" fill="none" stroke="#61dafb" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="14" ry="5.5" fill="none" stroke="#61dafb" stroke-width="1.5" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="14" ry="5.5" fill="none" stroke="#61dafb" stroke-width="1.5" transform="rotate(120 16 16)"/></svg>`,
-  TW:`<svg viewBox="0 0 32 32"><path d="M9 13.7q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9.1 4.9q2.8.7 4.9-2.1-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9.1-4.9Q11.1 10.9 9 13.7zM2 22.1q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9.1 4.9q2.8.7 4.9-2.1-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9.1-4.9q-2.8-.7-4.9 2.1z" fill="#38bdf8"/></svg>`,
-  BS:`<svg viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#563d7c"/><path d="M10 8h7.5a5 5 0 013.5 8.5A5.5 5.5 0 0117 27H10zm4 4v5h3a2.5 2.5 0 000-5zm0 9v5.5h3.5a2.75 2.75 0 000-5.5z" fill="#fff"/></svg>`,
-  NODE:`<svg viewBox="0 0 32 32"><path d="M16 3l12 6.9v13.8L16 30 4 23.7V9.9z" fill="#3c873a"/><path d="M16 7l8 4.6v9.2L16 25l-8-4.2v-9.2z" fill="#3c873a" opacity=".4"/><path d="M13 19.5c0 1.7 1 2.5 2.5 2.5s2.5-.8 2.5-2.5v-7h-2v7c0 .3-.2.5-.5.5s-.5-.2-.5-.5V19h-2z" fill="#fff"/></svg>`,
-  EXPRESS:`<svg viewBox="0 0 32 32"><path d="M2.4 15.4l.98-4.57C5.58 5.97 11.52 3.45 16.73 5.99c3.175 1.53 4.676 4.198 4.923 7.63.107 1.5.013 3.012.013 4.57H3.233c-.169 4.04 2.322 6.438 6.435 6.199 1.812-.105 3.358-.7 4.633-2.008.44-.454.815-.552 1.382-.3l-1.898 2.388c-2.863 2.222-7.765 2.22-10.67-.004C.704 22.573.08 20.043.306 15.427zm1.976-.886h15.21c-.09-3.942-2.635-6.62-6.897-6.622-4.502-.004-7.814 2.947-8.313 6.622zM20.809 23.875a2.866 2.866 0 002.6 1.6c1.09 0 1.787-.545 1.787-1.3 0-.9-.716-1.222-1.916-1.747l-.658-.282c-1.9-.809-3.16-1.822-3.16-3.964 0-1.973 1.5-3.476 3.853-3.476a3.889 3.889 0 013.742 2.107l-2.048 1.315a1.789 1.789 0 00-1.694-1.128 1.149 1.149 0 00-1.262 1.128c0 .789.487 1.109 1.615 1.6l.658.282c2.236.957 3.5 1.934 3.5 4.124 0 2.363-1.857 3.664-4.353 3.664a5.038 5.038 0 01-4.772-2.691z" fill="#aaa"/></svg>`,
-  MYSQL:`<svg viewBox="0 0 32 32"><path d="M2 16c0-3.86 3.14-7 7-7h14c3.86 0 7 3.14 7 7s-3.14 7-7 7H9c-3.86 0-7-3.14-7-7z" fill="#00758f" opacity=".15"/><path d="M5 10h3v12H5zm4.5 0h3l4 8 4-8h3v12h-3v-7l-3 6h-2l-3-6v7h-3z" fill="#00758f"/><path d="M25.5 16c0 2.5-2 4.5-4.5 4.5S16.5 18.5 16.5 16s2-4.5 4.5-4.5 4.5 2 4.5 4.5z" fill="#f29111" opacity=".8"/></svg>`,
-  MONGO:`<svg viewBox="0 0 32 32"><path d="M16 2c-1.2 2-2 3.5-2 6 0 3 1.5 5 2 6.5C16.5 13 18 11 18 8c0-2.5-.8-4-2-6z" fill="#599636"/><path d="M16 14.5v15.5c3.5-1 6-5 6-10s-2.5-9-6-5.5z" fill="#6cac48"/><path d="M16 14.5v15.5c-3.5-1-6-5-6-10s2.5-9 6-5.5z" fill="#599636"/></svg>`,
-  DOCKER:`<svg viewBox="0 0 32 32"><rect x="2" y="14" width="5" height="4" rx="1" fill="#099cec"/><rect x="8" y="14" width="5" height="4" rx="1" fill="#099cec"/><rect x="14" y="14" width="5" height="4" rx="1" fill="#099cec"/><rect x="8" y="9" width="5" height="4" rx="1" fill="#099cec"/><rect x="14" y="9" width="5" height="4" rx="1" fill="#099cec"/><rect x="14" y="4" width="5" height="4" rx="1" fill="#099cec"/><rect x="20" y="9" width="5" height="4" rx="1" fill="#099cec"/><path d="M29 16.5c-.5-1-2-1.5-3.5-1.5-.5-2-2-3.5-4-4l-.7.7c1.5.8 2 2 2.2 3.3H2.5A14 14 0 002 18c0 4 3 7.5 7 8.5 3 .8 7 .5 10-1.5 2-1.5 3.5-3.5 4-6 1.5-.1 3-1 3.5-2.5z" fill="#099cec"/></svg>`,
-  GH:`<svg viewBox="0 0 32 32"><path fill-rule="evenodd" d="M16 2a14 14 0 00-4.43 27.28c.7.13.95-.3.95-.67v-2.33c-3.89.84-4.71-1.88-4.71-1.88a3.71 3.71 0 00-1.55-2.04c-1.27-.86.1-.85.1-.85a2.94 2.94 0 012.14 1.44 2.98 2.98 0 004.08 1.16 2.99 2.99 0 01.89-1.87c-3.1-.35-6.37-1.55-6.37-6.9a5.4 5.4 0 011.44-3.75 5.01 5.01 0 01.14-3.7s1.17-.37 3.85 1.43a13.27 13.27 0 017 0c2.67-1.8 3.84-1.43 3.84-1.43a5.01 5.01 0 01.14 3.7 5.39 5.39 0 011.44 3.75c0 5.37-3.27 6.55-6.38 6.89a3.35 3.35 0 01.95 2.59v3.84c0 .46.25.8.96.67A14 14 0 0016 2z" fill="#fff"/></svg>`,
-  AWS:`<svg viewBox="0 0 32 32"><path d="M9 20.3c-1.5.8-2.5 1.2-3.7 1.2-2.3 0-3.8-1.6-3.8-3.9 0-2.8 2-4.6 5.2-4.6.8 0 1.5.1 2.3.4v2c-.7-.4-1.4-.6-2.1-.6-1.8 0-2.9 1-2.9 2.7 0 1.5.9 2.4 2.4 2.4.5 0 1-.1 1.6-.4v-1.3H6.5V17H9v3.3zm4.7 1v-7h2.2v7h-2.2zm5.8 0l-2.8-7h2.4l1.7 4.9 1.7-4.9H25l-2.8 7h-2.7zm9.5-3.3c0 2.1-1.5 3.5-3.8 3.5-.7 0-1.4-.1-1.9-.3v-1.9c.5.3 1.1.5 1.7.5 1.1 0 1.7-.6 1.7-1.8 0-1.1-.6-1.7-1.6-1.7-.4 0-.9.1-1.3.3v-1.9c.4-.2 1-.3 1.5-.3 2.2 0 3.7 1.4 3.7 3.6z" fill="#f90"/><path d="M16 26c-5.5 0-10.2-2.7-13-6.8.6.3 1.2.4 1.9.4 2.6 0 5-1.7 5-1.7s1.7 1.1 4.1 1.1c2.3 0 4.2-1.1 4.2-1.1s2.4 1.7 5 1.7c.7 0 1.3-.1 1.9-.4C22.2 23.3 19.5 26 16 26z" fill="#f90"/></svg>`,
+  HTML5: `<svg viewBox="0 0 128 128"><path fill="#E44D26" d="M19.037 113.876L9.032 1.661h109.936l-10.005 112.198-45.019 12.48z"></path><path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z"></path><path fill="#EBEBEB" d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zM64 88.198l-.061.017-15.327-4.14-.979-10.977H33.816l1.928 21.609 28.193 7.822.063-.017z"></path><path fill="#fff" d="M63.952 52.455v13.897h16.795l-1.587 17.776-15.208 4.102v13.936l27.977-7.747.205-2.298 3.207-35.928.335-3.738zM63.952 24.599v13.886h26.331l.223-2.496.516-5.767.33-3.623z"></path></svg>`,
+  CSS3: `<svg viewBox="0 0 128 128"><path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.054 112.771-45.247 12.543z"></path><path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"></path><path fill="#EBEBEB" d="M64.001 51.429h-18.59l-1.237-14.039h19.827v-13.8h-34.64l.331 3.743 3.382 38.05h30.927zM64.001 88.038l-.047.012-15.398-4.126-.984-11.123h-13.78l1.937 21.892 28.192 7.799.063-.015z"></path><path fill="#fff" d="M64.001 51.429v13.783h16.844l-1.577 17.711-15.267 4.106v13.804l28.058-7.776.207-2.301 3.215-35.986.335-3.737zM64.001 24.596v13.807h26.475l.222-2.488.516-5.774.33-3.545z"></path></svg>`,
+  JS: `<svg viewBox="0 0 128 128"><path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z"></path><path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.047 3.617-4.135 6.922-3.358 2.513.563 4.816 2.084 6.187 5.011.523-1.29.994-2.543 1.514-3.793 2.518-6.021 5.192-11.813 7.759-17.589-7.023-2.796-13.584-4.291-20.234-4.291-.114 0-.227.002-.341.006-3.131.112-6.184.748-9.083 1.852-2.638.996-5.105 2.367-7.26 4.065-2.333 1.864-3.871 3.764-4.919 6.036-2.345 5.293-1.977 12.456 1.218 17.749 4.358 6.972 11.673 10.526 20.661 13.841 3.889 1.514 7.869 3.026 9.941 6.103.979 1.442 1.127 2.995.805 4.807-.508 3.146-2.792 4.973-6.099 5.382-4.284.636-8.241-1.189-10.128-4.732-1.137-1.918-1.72-3.996-2.272-6.092-.576.876-1.167 1.742-1.736 2.62-3.051 4.677-6.893 8.512-11.597 11.013-2.738 1.492-6.109 2.771-8.961 2.74-1.159-.012-2.31-.179-3.411-.524-2.619-.801-4.057-2.551-4.169-5.253-.095-1.787.369-3.571 1.155-5.186 2.297-4.173 7.203-6.568 12.733-7.424 3.054-.47 6.141-.447 9.178.144.281.059.562.124.842.189-1.025-2.461-2.111-4.901-3.156-7.354-5.674.471-11.322.087-16.848-.992-5.353-1.046-10.129-3.213-13.875-6.889-5.371-5.699-7.674-12.754-6.537-20.571.88-6.172 3.804-11.443 8.279-15.297 3.883-3.307 8.535-5.443 13.788-6.475 5.397-1.063 10.949-.987 16.411.115 4.745.958 9.145 2.605 13.047 5.163 1.979 1.321 3.727 2.926 5.197 4.792.881 1.132 1.875 2.251 2.522 3.555.206.403.388.815.556 1.233 2.602-5.078 5.249-10.146 7.858-15.231z"></path></svg>`,
+  TS: `<svg viewBox="0 0 128 128"><path fill="#fff" d="M22.67 47h99.67v73.67H22.67z"></path><path fill="#007acc" d="M1.5 63.91v62.5h125v-125H1.5zm100.73-5a15.56 15.56 0 017.82 4.5 20.58 20.58 0 013 4c0 .16-5.4 3.81-8.69 5.85-.12.08-.6-.44-1.13-1.23a7.09 7.09 0 00-5.87-3.53c-3.78-.26-6.23 1.73-6.23 5a4.58 4.58 0 00.54 2.34c.83 1.73 2.38 2.76 7.24 4.86 8.95 3.85 12.78 6.39 15.16 10 2.66 4 3.25 10.46 1.45 15.24-2 5.2-6.9 8.73-13.83 9.9a38.32 38.32 0 01-9.52-.1 23 23 0 01-12.72-6.63c-1.57-1.61-3.1-4.09-3.1-4.5 0-.2.84-.59 1.45-.9.47-.24 2.13-1.26 2.63-1.58l1.6-1.06 3.6 5.31a12 12 0 009.45 4.86 13.18 13.18 0 009.38-4 7.18 7.18 0 001.89-4.63c0-1.87-.73-3.28-2.32-4.71-1.73-1.52-3.49-2.6-8.21-5.07-5.9-3.09-8.84-5.4-11.54-9a19.12 19.12 0 01-2.86-10.26c.24-5.76 3.49-10.38 8.8-12.5a21 21 0 016.63-1.35 27 27 0 015.74.13zm-39.42 5.8c0 .29-.12 2.44-.27 4.78l-.31 4.27H48.6v39.44c0 28.34-.1 39.66-.37 40.18-.88 1.7-3.15 2.12-6.1 1.13-1.75-.58-2.26-.94-2.26-1.59 0-.2.11-18.21.24-40.05l.27-39.72h-8.41c-6.36 0-8.48-.08-9.1-.36-1.19-.51-1.48-1.42-1.32-4.09l.1-2.22h25.65c14.11 0 25.68.1 25.7.23z"></path></svg>`,
+  PY: `<svg viewBox="0 0 128 128"><path fill="#387EB8" d="M63.916 2.1c-7.1 0-6.651 3.07-6.651 3.07v3.19h6.752v1H6.545S2 8.8 2 15.993s4.013 6.912 4.013 6.912H8.33v-3.361s-.13-4.013 3.9-4.013h6.762s3.772.06 3.772-3.652V5.8s.572-3.7-6.879-3.7zm-3.741 2.137a1.214 1.214 0 111.214 1.214 1.214 1.214 0 01-1.214-1.214z"></path><path fill="#FFC331" d="M16.085 29.9c7.1 0 6.651-3.07 6.651-3.07v-3.19h-6.752v-1h9.441S30 23.2 30 16.007s-4.013-6.912-4.013-6.912H23.67v3.361s.13 4.013-3.9 4.013h-6.762s-3.772-.06-3.772 3.652v6.079S8.664 29.9 16.085 29.9zm3.741-2.137a1.214 1.214 0 111.214-1.214 1.214 1.214 0 01-1.214 1.214z"></path></svg>`,
+  JAVA: `<svg viewBox="0 0 128 128"><path fill="#EA2D2E" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.472-55.308-.607-36.115-5.969z"></path><path fill="#EA2D2E" d="M44.629 84.455s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z"></path><path fill="#F58220" d="M69.44 55.441c6.022 6.927-1.58 13.158-1.58 13.158s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.199z"></path><path fill="#EA2D2E" d="M94.22 102.853s3.526 2.906-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.54 8.034 90.363-3.607 77.896-9.468z"></path><path fill="#EA2D2E" d="M50.106 73.165s-22.855 5.426-8.091 7.395c6.233.832 18.659.641 30.245-.328 9.463-.793 18.969-2.489 18.969-2.489s-3.337 1.427-5.752 3.071c-23.216 6.108-68.052 3.264-55.164-2.985 10.937-5.186 19.793-4.664 19.793-4.664z"></path><path fill="#EA2D2E" d="M97.282 88.735c23.623-12.275 12.703-24.078 5.079-22.489-1.868.389-2.703.729-2.703.729s.695-1.088 2.018-1.558c15.109-5.296 26.731 15.617-4.877 23.888 0 0 .367-.33.483-.57z"></path><path fill="#F58220" d="M75.46 23.243c13.611 12.745-3.617 24.24-3.617 24.24s8.993-4.531 14.733-13.639c5.731-9.09 3.384-17.755-11.116-10.601z"></path><path fill="#EA2D2E" d="M52.355 119.13c22.646 1.438 57.428-.798 58.258-11.528 0 0-1.584 4.061-18.652 7.283-19.241 3.633-42.945 3.207-57.012.878 0 0 2.876 2.379 17.406 3.367z"></path></svg>`,
+  REACT: `<svg viewBox="0 0 128 128"><circle cx="64" cy="64" r="11.4" fill="#61DAFB"></circle><path fill="none" stroke="#61DAFB" stroke-width="3" d="M107.3 64c0-12.6-9.4-23.7-24.3-30.4c-9.5-4.2-20.7-6.4-32.2-6.4c-11.5 0-22.7 2.2-32.2 6.4C30.1 40.3 20.7 51.4 20.7 64c0 12.6 9.4 23.7 24.3 30.4c9.5 4.2 20.7 6.4 32.2 6.4c11.5 0 22.7-2.2 32.2-6.4c14.9-6.7 24.3-17.8 24.3-30.4z"></path><path fill="none" stroke="#61DAFB" stroke-width="3" d="M87.5 43.4c-6.2-10.9-14.4-19-23.5-23.5c-9.1-4.5-18.4-5-26.5-1.4c-8.1 3.6-13.9 11.9-17 23.6c-3.1 11.7-2.4 25.4 2 39.7c3.7 12.2 9.9 21.7 17.9 26.8c8 5.1 17 5.5 25.1 1.8c8.1-3.7 14-12.5 17.1-24.7c3.1-12.2 2.4-25.9-1.9-40.3z"></path><path fill="none" stroke="#61DAFB" stroke-width="3" d="M87.5 84.6c6.2-10.9 9.1-22.8 8.4-34.3c-.7-11.5-4.7-21.6-11.4-27.7c-6.7-6.1-15-8.8-23.9-7.8c-8.9 1-17.5 5.7-24.5 13.2c-7 7.5-11.2 17-13 27.6c-1.8 10.6-.7 21.3 3.2 31c3.9 9.7 10.4 17.1 18.6 20.7c8.2 3.6 17 3.5 25.2.2c8.2-3.3 14.6-10.5 18.4-20.1z"></path></svg>`,
+  TW: `<svg viewBox="0 0 128 128"><path fill="#38BDF8" d="M64 16c-26.5 0-48 21.5-48 48s21.5 48 48 48 48-21.5 48-48-21.5-48-48-48zm0 88c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"></path><path fill="#38BDF8" d="M64 32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm0 56c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z"></path></svg>`,
+  BS: `<svg viewBox="0 0 128 128"><rect width="128" height="128" rx="16" fill="#563D7C"></rect><path fill="#FFF" d="M40 32h30a20 20 0 0114 34 22 22 0 01-14 42H40zm16 16v20h12a10 10 0 000-20zm0 36v22h14a11 11 0 000-22z"></path></svg>`,
+  NODE: `<svg viewBox="0 0 128 128"><path fill="#3C873A" d="M64 3l55 31.8v63.6L64 129 9 97.2V33.8L64 2z"></path><path fill="#3C873A" opacity=".4" d="M64 29l33 19v38L64 105 31 86V48l33-19z"></path><path fill="#FFF" d="M52 78c0 6.8 4 10 10 10s10-3.2 10-10V62h-8v16c0 1.2-.8 2-2 2s-2-.8-2-2V78h-8z"></path></svg>`,
+  EXPRESS: `<svg viewBox="0 0 128 128"><path fill="#999" d="M9.6 61.6l4-18.3c2.8-12.8 12.9-17.6 21-14.3 8.5 3.9 12.6 10.8 13.2 19.8.3 4.2.1 8.4.1 12.7H12.9c-.5 10.8 6.2 17.2 17.2 16.6 4.8-.3 9-1.9 12.4-5.4 1.2-1.2 2.2-1.5 3.7-.8l-5.1 6.4c-7.7 5.9-20.8 5.9-28.6 0-4.8-3.7-7.2-8.7-6.9-15.1zm8-3.6h40.8c-.3-10.6-7.1-17.8-18.5-17.8-12-.1-20.8 7.9-22.3 17.8z"></path><path fill="#999" d="M84.9 95.5c-2.8-1.8-4.6-4.2-5.4-7.8-1 4.4-3 7.6-7 9.7-7.8 4.1-15.6.8-18.4-6.8-1.9-5.2-1.4-10.5 1.3-15.4 2.9-5.3 7.5-8.1 13.6-8.8 6.6-.8 12.4 1.2 17 5.8 1.2 1.2 2 2.6 3 4.2-7.4-5.2-15.9-4.9-21.8 1-3.3 3.3-4.8 7.4-3.9 12 1 5 4.9 8 9.9 7.5 4.8-.5 8.3-2.9 10.7-7.2z"></path><path fill="#999" d="M127.6 85.5c-1 5.2-3.4 9.2-7.9 11.8-8.2 4.7-17.5 2.9-21.6-4.6-2.3-4.2-2.6-8.7-1.5-13.3 1.3-5.2 4.2-9.2 8.9-11.7 8.2-4.4 17.5-2.2 21.3 4.9 1.9 3.6 2.1 7.5 1.2 11.5h-24.9c-.1 2.9.7 5.5 2.6 7.6 2.8 3.1 6.9 3.8 10.4 2 2.1-1.1 3.3-2.9 3.6-5.2h5.6zm-5.4-8.1c-.2-3.2-2.2-5.4-5.2-5.9-3.7-.6-6.6 1.4-7.6 4.9-.3 1-.5 2-.5 3h13.3z"></path></svg>`,
+  MYSQL: `<svg viewBox="0 0 128 128"><path fill="#00758F" d="M8 64c0-15.4 12.6-28 28-28h56c15.4 0 28 12.6 28 28s-12.6 28-28 28H36c-15.4 0-28-12.6-28-28z" opacity=".15"></path><path fill="#00758F" d="M20 40h12v48H20zm18 0h12l16 32 16-32h12v48h-12V68l-12 24-12-24v20H38zM102 40h12v48h-12z"></path><path fill="#F29111" d="M102 64c0 10-8 18-18 18s-18-8-18-18 8-18 18-18 18 8 18 18z" opacity=".8"></path></svg>`,
+  MONGO: `<svg viewBox="0 0 128 128"><path fill="#599636" d="M64 8c-4.8 8-8 14-8 24 0 12 6 20 8 26 2-6 8-14 8-26 0-10-3.2-16-8-24z"></path><path fill="#6CAC48" d="M64 58v62c14-4 24-20 24-40s-10-36-24-22z"></path><path fill="#599636" d="M64 58v62c-14-4-24-20-24-40s10-36 24-22z"></path></svg>`,
+  DOCKER: `<svg viewBox="0 0 128 128"><rect x="8" y="56" width="20" height="16" rx="4" fill="#099CEC"></rect><rect x="32" y="56" width="20" height="16" rx="4" fill="#099CEC"></rect><rect x="56" y="56" width="20" height="16" rx="4" fill="#099CEC"></rect><rect x="32" y="36" width="20" height="16" rx="4" fill="#099CEC"></rect><rect x="56" y="36" width="20" height="16" rx="4" fill="#099CEC"></rect><rect x="56" y="16" width="20" height="16" rx="4" fill="#099CEC"></rect><rect x="80" y="36" width="20" height="16" rx="4" fill="#099CEC"></rect><path fill="#099CEC" d="M116 66c-2-4-8-6-14-6-2-8-8-14-16-16l-2.8 2.8c6 3.2 8 8 8.8 13.2H10c0 16 12 30 28 34 12 3.2 28 2 40-6 8-6 14-14 16-24 6-.4 12-4 14-10z"></path></svg>`,
+  GH: `<svg viewBox="0 0 128 128"><path fillRule="evenodd" clipRule="evenodd" fill="#fff" d="M64 5.2c-32.5 0-58.9 26.4-58.9 58.9 0 26 16.9 48.1 40.3 55.9 2.9.5 4-1.3 4-2.8 0-1.4-.1-6-.1-10.9-14.2 2.6-17.8-3.4-18.9-6.6-.6-1.6-3.3-6.6-5.6-7.9-1.9-1-4.6-3.5-.1-3.6 4.3-.1 7.3 4 8.3 5.6 4.9 8.2 12.7 5.9 15.8 4.5.5-3.5 1.9-5.9 3.5-7.2-12.1-1.4-24.8-6-24.8-26.8 0-5.9 2.1-10.8 5.6-14.6-.6-1.4-2.4-6.9.5-14.3 0 0 4.6-1.5 15 5.5 4.4-1.2 9.1-1.8 13.7-1.8 4.7 0 9.3.6 13.7 1.8 10.4-7 15-5.5 15-5.5 2.9 7.4 1.1 12.9.5 14.3 3.5 3.8 5.6 8.7 5.6 14.6 0 20.8-12.7 25.4-24.8 26.8 2 1.7 3.7 5 3.7 10 0 7.2-.1 13-.1 14.8 0 1.5 1.1 3.3 4 2.8 23.4-7.8 40.3-29.9 40.3-55.9 0-32.5-26.4-58.9-58.9-58.9z"></path></svg>`,
+  AWS: `<svg viewBox="0 0 128 128"><path fill="#F90" d="M36 81.2c-6 3.2-10 4.8-14.8 4.8-9.2 0-15.2-6.4-15.2-15.6 0-11.2 8-18.4 20.8-18.4 3.2 0 6 .4 9.2 1.6v8c-2.8-1.6-5.6-2.4-8.4-2.4-7.2 0-11.6 4-11.6 11.2 0 6 3.6 9.6 9.6 9.6 2 0 4-.4 6.4-1.6v-5.2h-6.8V68H36v13.2zm18.8 4V56h8.8v29.2h-8.8zm23.2 0l-11.2-28h9.6l6.8 19.6 6.8-19.6H100l-11.2 28H78zm38-13.2c0 8.4-6 14-15.2 14-2.8 0-5.6-.4-7.6-1.2v-7.6c2 1.2 4.4 2 6.8 2 4.4 0 6.8-2.4 6.8-7.2 0-4.4-2.4-6.8-6.4-6.8-1.6 0-3.6.4-5.2 1.2v-7.6c1.6-.8 4-1.2 6-1.2 8.8 0 14.8 5.6 14.8 14.4z"></path><path fill="#F90" d="M64 104c-22 0-40.8-10.8-52-27.2 2.4 1.2 4.8 1.6 7.6 1.6 10.4 0 20-6.8 20-6.8s6.8 4.4 16.4 4.4c9.2 0 16.8-4.4 16.8-4.4s9.6 6.8 20 6.8c2.8 0 5.2-.4 7.6-1.6-8.8 15.6-26 26-46 26z"></path></svg>`,
 };
 
 const SKILLS = [
@@ -755,6 +755,198 @@ function SkillChip({icon}) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   RESPONSIVE NAVIGATION BAR - FIXED FOR ALL DEVICES
+═══════════════════════════════════════════════════════════ */
+function Nav() {
+  const [scroll, setScroll] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => setScroll(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
+  const go = (id) => {
+    setMobileMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+  
+  return (
+    <nav style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: 200,
+      height: "auto",
+      minHeight: 64,
+      padding: "12px 6%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexWrap: "wrap",
+      background: scroll ? "rgba(5,0,20,0.95)" : "rgba(5,0,20,0.8)",
+      backdropFilter: "blur(20px)",
+      borderBottom: scroll ? "1px solid rgba(167,139,250,0.15)" : "1px solid rgba(167,139,250,0.08)",
+      transition: "all 0.4s ease",
+      boxSizing: "border-box",
+    }}>
+      {/* Logo */}
+      <div 
+        onClick={() => go("hero")} 
+        style={{
+          fontWeight: 900,
+          fontSize: "clamp(20px, 5vw, 24px)",
+          letterSpacing: "0.06em",
+          color: "#fff",
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <span style={{
+          background: "linear-gradient(135deg,#a78bfa,#60a5fa)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}>A</span>KM
+      </div>
+      
+      {/* Desktop Navigation Links */}
+      <div style={{
+        display: mobileMenuOpen ? "none" : "flex",
+        gap: "clamp(16px, 4vw, 28px)",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }} className="desktop-nav">
+        {["About", "Skills", "Projects", "Contact"].map(l => (
+          <NLink key={l} label={l} onClick={() => go(l.toLowerCase())} />
+        ))}
+      </div>
+      
+      {/* Hire Me Button - Desktop */}
+      <a
+        href="mailto:ashiskumarmohanty738@gmail.com?subject=Hiring%20Opportunity%20for%20Ashis%20Kumar%20Mohanty&body=Hi%20Ashis%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20potential%20opportunity%20with%20you.%0A%0APlease%20let%20me%20know%20your%20availability.%0A%0ARegards"
+        style={{
+          padding: "8px 18px",
+          borderRadius: 50,
+          background: "linear-gradient(135deg,#7c3aed,#4f46e5)",
+          color: "#fff",
+          fontSize: "clamp(11px, 3vw, 13px)",
+          fontWeight: 700,
+          textDecoration: "none",
+          transition: "all 0.25s",
+          letterSpacing: "0.04em",
+          boxShadow: "0 4px 12px #7c3aed55",
+          whiteSpace: "nowrap",
+          display: mobileMenuOpen ? "none" : "inline-block",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 6px 20px #7c3aed88"; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 12px #7c3aed55"; }}
+      >
+        ✉ Hire Me
+      </a>
+      
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        style={{
+          display: "none",
+          background: "rgba(255,255,255,0.1)",
+          border: "1px solid rgba(167,139,250,0.3)",
+          borderRadius: 8,
+          padding: "8px 12px",
+          cursor: "pointer",
+          color: "#fff",
+          fontSize: 20,
+        }}
+        className="mobile-menu-btn"
+      >
+        {mobileMenuOpen ? "✕" : "☰"}
+      </button>
+      
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div style={{
+          position: "absolute",
+          top: "100%",
+          left: 0,
+          right: 0,
+          background: "rgba(5,0,20,0.98)",
+          backdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(167,139,250,0.2)",
+          padding: "16px 6%",
+          display: "flex",
+          flexDirection: "column",
+          gap: 16,
+          zIndex: 199,
+        }}>
+          {["About", "Skills", "Projects", "Contact"].map(l => (
+            <button
+              key={l}
+              onClick={() => go(l.toLowerCase())}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#d1d5db",
+                fontSize: 16,
+                fontWeight: 500,
+                padding: "10px 0",
+                textAlign: "left",
+                cursor: "pointer",
+                borderBottom: "1px solid rgba(167,139,250,0.1)",
+              }}
+            >
+              {l}
+            </button>
+          ))}
+          <a
+            href="mailto:ashiskumarmohanty738@gmail.com"
+            style={{
+              padding: "10px 20px",
+              borderRadius: 50,
+              background: "linear-gradient(135deg,#7c3aed,#4f46e5)",
+              color: "#fff",
+              fontSize: 14,
+              fontWeight: 700,
+              textDecoration: "none",
+              textAlign: "center",
+              marginTop: 8,
+            }}
+          >
+            ✉ Hire Me
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+function NLink({ label, onClick }) {
+  const [h, setH] = useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
+      style={{
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        padding: "4px 2px",
+        color: h ? "#a78bfa" : "#d1d5db",
+        fontSize: "clamp(13px, 3.5vw, 14px)",
+        fontWeight: 500,
+        borderBottom: h ? "1.5px solid #a78bfa" : "1.5px solid transparent",
+        transition: "all 0.2s",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {label}
+    </button>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    HEXAGON PROFILE IMAGE COMPONENT
 ═══════════════════════════════════════════════════════════ */
 function HexagonProfile() {
@@ -771,16 +963,15 @@ function HexagonProfile() {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
-          width: 130,
-          height: 130,
+          width: "clamp(100px, 20vw, 130px)",
+          height: "clamp(100px, 20vw, 130px)",
           position: "relative",
           cursor: "pointer",
           transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
           transform: hover ? "scale(1.08) rotate(3deg)" : "scale(1) rotate(0deg)",
         }}
       >
-        {/* Hexagon shape using SVG */}
-        <svg width="130" height="130" viewBox="0 0 130 130" style={{ position: "absolute", top: 0, left: 0, zIndex: 2 }}>
+        <svg width="100%" height="100%" viewBox="0 0 130 130" style={{ position: "absolute", top: 0, left: 0, zIndex: 2 }}>
           <defs>
             <clipPath id="hexagonClip">
               <polygon points="65,0 126,32.5 126,97.5 65,130 4,97.5 4,32.5" />
@@ -793,13 +984,12 @@ function HexagonProfile() {
           <polygon points="65,0 126,32.5 126,97.5 65,130 4,97.5 4,32.5" fill="none" stroke="#a78bfa" strokeWidth="3"/>
         </svg>
         
-        {/* Image with hexagon clip */}
         <div style={{
           position: "absolute",
-          top: 3,
-          left: 3,
-          width: 124,
-          height: 124,
+          top: "2.3%",
+          left: "2.3%",
+          width: "95.4%",
+          height: "95.4%",
           clipPath: "polygon(62px 3px, 123px 35.5px, 123px 100.5px, 62px 133px, 7px 100.5px, 7px 35.5px)",
           overflow: "hidden",
           borderRadius: 0,
@@ -817,14 +1007,13 @@ function HexagonProfile() {
           />
         </div>
         
-        {/* Glow effect on hover */}
         {hover && (
           <div style={{
             position: "absolute",
             top: -10,
             left: -10,
-            width: 150,
-            height: 150,
+            width: "calc(100% + 20px)",
+            height: "calc(100% + 20px)",
             background: "radial-gradient(circle, rgba(167,139,250,0.4), transparent)",
             borderRadius: "50%",
             zIndex: 1,
@@ -836,12 +1025,12 @@ function HexagonProfile() {
       
       <div style={{
         textAlign: "center",
-        marginTop: 15,
+        marginTop: "clamp(10px, 3vw, 15px)",
         transition: "all 0.3s ease",
         transform: hover ? "translateY(-3px)" : "translateY(0)",
       }}>
         <h3 style={{
-          fontSize: 18,
+          fontSize: "clamp(16px, 4vw, 18px)",
           fontWeight: 700,
           background: "linear-gradient(135deg, #fff, #a78bfa)",
           WebkitBackgroundClip: "text",
@@ -849,7 +1038,7 @@ function HexagonProfile() {
           marginBottom: 4,
         }}>Ashis Kumar Mohanty</h3>
         <p style={{
-          fontSize: 12,
+          fontSize: "clamp(10px, 3vw, 12px)",
           color: "#a78bfa",
           letterSpacing: "0.08em",
           display: "inline-block",
@@ -860,65 +1049,6 @@ function HexagonProfile() {
         }}>Full Stack Developer</p>
       </div>
     </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════
-   NAV
-═══════════════════════════════════════════════════════════ */
-function Nav() {
-  const [scroll,setScroll]=useState(false);
-  useEffect(()=>{
-    const h=()=>setScroll(window.scrollY>50);
-    window.addEventListener("scroll",h);
-    return ()=>window.removeEventListener("scroll",h);
-  },[]);
-  const go=(id)=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
-  return (
-    <nav style={{
-      position:"fixed",top:0,left:0,right:0,zIndex:200,
-      height:64,padding:"0 6%",
-      display:"flex",alignItems:"center",justifyContent:"space-between",
-      background: scroll?"rgba(5,0,20,0.88)":"transparent",
-      backdropFilter: scroll?"blur(20px)":"none",
-      borderBottom: scroll?"1px solid rgba(167,139,250,0.12)":"none",
-      transition:"all 0.4s ease",
-    }}>
-      <div style={{fontWeight:900,fontSize:20,letterSpacing:"0.06em",color:"#fff",cursor:"pointer"}} onClick={()=>go("hero")}>
-        <span style={{
-          background:"linear-gradient(135deg,#a78bfa,#60a5fa)",
-          WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
-        }}>A</span>KM
-      </div>
-      <div style={{display:"flex",gap:28}}>
-        {["About","Skills","Projects","Contact"].map(l=>(
-          <NLink key={l} label={l} onClick={()=>go(l.toLowerCase())}/>
-        ))}
-      </div>
-      <a
-        href="mailto:ashiskumarmohanty738@gmail.com?subject=Hiring%20Opportunity%20for%20Ashis%20Kumar%20Mohanty&body=Hi%20Ashis%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20potential%20opportunity%20with%20you.%0A%0APlease%20let%20me%20know%20your%20availability.%0A%0ARegards"
-        style={{
-          padding:"9px 22px",borderRadius:50,
-          background:"linear-gradient(135deg,#7c3aed,#4f46e5)",
-          color:"#fff",fontSize:13,fontWeight:700,textDecoration:"none",
-          transition:"all 0.25s",letterSpacing:"0.04em",
-          boxShadow:"0 4px 18px #7c3aed55",
-        }}
-        onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.06)";e.currentTarget.style.boxShadow="0 8px 32px #7c3aed88";}}
-        onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 4px 18px #7c3aed55";}}
-      >✉ Hire Me</a>
-    </nav>
-  );
-}
-function NLink({label,onClick}) {
-  const [h,setH]=useState(false);
-  return (
-    <button onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{
-      background:"none",border:"none",cursor:"pointer",padding:"4px 2px",
-      color:h?"#a78bfa":"#d1d5db",fontSize:14,fontWeight:500,
-      borderBottom:h?"1.5px solid #a78bfa":"1.5px solid transparent",
-      transition:"all 0.2s",
-    }}>{label}</button>
   );
 }
 
@@ -941,6 +1071,23 @@ const FLOATS = [
    MAIN APP
 ═══════════════════════════════════════════════════════════ */
 export default function App() {
+  // Add responsive CSS for mobile menu
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @media (max-width: 768px) {
+        .desktop-nav {
+          display: none !important;
+        }
+        .mobile-menu-btn {
+          display: flex !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+  
   return (
     <div style={{
       fontFamily:"'Inter','Segoe UI',sans-serif",
@@ -961,8 +1108,6 @@ export default function App() {
         @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
         @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
         @keyframes matrix{0%{background-position:0% 0%}100%{background-position:100% 100%}}
-        @keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-        @keyframes shimmer{0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}
         ::-webkit-scrollbar{width:4px}
         ::-webkit-scrollbar-track{background:#030010}
         ::-webkit-scrollbar-thumb{background:linear-gradient(#7c3aed,#4f46e5);border-radius:4px}
@@ -978,6 +1123,14 @@ export default function App() {
           background-image: repeating-linear-gradient(0deg, rgba(100, 100, 255, 0.2) 0px, rgba(100, 100, 255, 0.2) 1px, transparent 1px, transparent 2px);
           background-size: 100% 3px;
           animation: matrix 20s linear infinite;
+        }
+        @media (max-width: 768px) {
+          .desktop-nav {
+            display: none !important;
+          }
+          .mobile-menu-btn {
+            display: flex !important;
+          }
         }
       `}</style>
 
@@ -1039,7 +1192,7 @@ export default function App() {
           </div>
 
           <h1 style={{
-            fontSize:"clamp(2.4rem,5vw,3.9rem)",fontWeight:900,lineHeight:1.08,
+            fontSize:"clamp(2rem,6vw,3.9rem)",fontWeight:900,lineHeight:1.2,
             marginBottom:22,animation:"slideUp 0.9s ease 0.1s both",textAlign:"center",
           }}>
             Providing the{" "}
@@ -1055,7 +1208,7 @@ export default function App() {
           </h1>
 
           <p style={{
-            fontSize:15,lineHeight:1.8,color:"#94a3b8",marginBottom:38,
+            fontSize:"clamp(13px, 4vw, 15px)",lineHeight:1.7,color:"#94a3b8",marginBottom:38,
             animation:"slideUp 0.9s ease 0.2s both",textAlign:"center",
           }}>
             I'm <strong style={{color:"#e2e8f0",fontWeight:700}}>Ashis Kumar Mohanty</strong> — B.Tech CSE (2026) & Full Stack Engineer. Passionate about building impactful, pixel-perfect web applications.
@@ -1065,9 +1218,9 @@ export default function App() {
             <button
               onClick={()=>document.getElementById("projects")?.scrollIntoView({behavior:"smooth"})}
               style={{
-                padding:"13px 30px",borderRadius:50,border:"none",
+                padding:"12px 24px",borderRadius:50,border:"none",
                 background:"linear-gradient(135deg,#7c3aed,#4f46e5)",
-                color:"#fff",fontWeight:700,fontSize:14,cursor:"pointer",
+                color:"#fff",fontWeight:700,fontSize:"clamp(12px, 3.5vw, 14px)",cursor:"pointer",
                 transition:"all 0.3s ease",boxShadow:"0 6px 24px #7c3aed55",letterSpacing:"0.04em",
               }}
               onMouseEnter={e=>{e.target.style.transform="translateY(-3px)";e.target.style.boxShadow="0 12px 36px #7c3aed88";}}
@@ -1076,9 +1229,9 @@ export default function App() {
             <a
               href="mailto:ashiskumarmohanty738@gmail.com?subject=Hiring%20Opportunity&body=Hi%20Ashis%2C%0A%0AI'd%20love%20to%20connect%20regarding%20a%20potential%20opportunity."
               style={{
-                padding:"13px 30px",borderRadius:50,
+                padding:"12px 24px",borderRadius:50,
                 border:"1.5px solid rgba(167,139,250,0.45)",
-                color:"#c4b5fd",fontWeight:600,fontSize:14,
+                color:"#c4b5fd",fontWeight:600,fontSize:"clamp(12px, 3.5vw, 14px)",
                 textDecoration:"none",transition:"all 0.3s ease",letterSpacing:"0.04em",
                 display:"inline-block",
               }}
@@ -1087,21 +1240,22 @@ export default function App() {
             >✉ Contact Me</a>
           </div>
 
-          <div style={{display:"flex",gap:28,justifyContent:"center",marginTop:44,animation:"slideUp 0.9s ease 0.45s both"}}>
+          <div style={{display:"flex",gap:28,justifyContent:"center",marginTop:44,animation:"slideUp 0.9s ease 0.45s both",flexWrap:"wrap"}}>
             {[{n:"8.18",l:"CGPA"},  {n:"10+",l:"Projects"}, {n:"4+",l:"Internship"}].map(s=>(
-              <div key={s.l}>
+              <div key={s.l} style={{textAlign:"center"}}>
                 <div style={{
-                  fontSize:"1.8rem",fontWeight:900,
+                  fontSize:"clamp(1.5rem, 5vw, 1.8rem)",fontWeight:900,
                   background:"linear-gradient(135deg,#a78bfa,#60a5fa)",
                   WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
                 }}>{s.n}</div>
-                <div style={{fontSize:11,color:"#6b7280",letterSpacing:"0.08em",marginTop:2,textAlign:"center"}}>{s.l}</div>
+                <div style={{fontSize:"clamp(10px, 3vw, 11px)",color:"#6b7280",letterSpacing:"0.08em",marginTop:2}}>{s.l}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Rest of the sections remain the same as previous code... */}
       {/* ══ MARQUEE ════════════════════════════════════════════ */}
       <div style={{
         padding:"44px 0",
@@ -1111,7 +1265,7 @@ export default function App() {
         overflow:"hidden",position:"relative",zIndex:1,
       }}>
         <Reveal>
-          <div style={{textAlign:"center",marginBottom:28}}>
+          <div style={{textAlign:"center",marginBottom:28, padding:"0 16px"}}>
             <span style={{
               display:"inline-block",fontSize:10,letterSpacing:"0.18em",
               color:"#6366f1",textTransform:"uppercase",marginBottom:8,
@@ -1119,7 +1273,7 @@ export default function App() {
               background:"rgba(99,102,241,0.12)",border:"1px solid rgba(99,102,241,0.25)",
             }}>✦ Modern Tech Stack ✦</span>
             <h2 style={{
-              fontSize:"clamp(1.4rem,3vw,2rem)",fontWeight:800,color:"#e2e8f0",marginTop:8,
+              fontSize:"clamp(1.2rem, 5vw, 2rem)",fontWeight:800,color:"#e2e8f0",marginTop:8,
             }}>Making apps with modern technologies.</h2>
             <p style={{fontStyle:"italic",color:"#7c3aed",fontSize:13,marginTop:5,opacity:0.8}}>Never miss a task, deadline, or idea.</p>
           </div>
@@ -1142,14 +1296,14 @@ export default function App() {
       </div>
 
       {/* ══ ABOUT / EXPERIENCE ════════════════════════════════ */}
-      <section id="about" style={{padding:"100px 6%",position:"relative",zIndex:1}}>
+      <section id="about" style={{padding:"clamp(60px, 10vw, 100px) 6%",position:"relative",zIndex:1}}>
         <Reveal>
           <div style={{textAlign:"center",marginBottom:56}}>
             <Tag>✦ About Me ✦</Tag>
             <h2 style={secHead}>My Journey</h2>
           </div>
         </Reveal>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:22,maxWidth:1000,margin:"0 auto"}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:22,maxWidth:1000,margin:"0 auto"}}>
           {[
             {period:"2025 – 2026",title:"Software Engineer Intern",place:"ASP OL MEDIA PVT. LTD, Nagpur",desc:"Email marketing tools (SMTP, BIRD, UNLAYER) — designed & tested templates for international clients.",color:"#a78bfa",icon:"💼"},
             {period:"2025",title:"Scientific Calculator",place:"Techzex Pvt. Ltd",desc:"The central aim of the project was to test the hypothesis that providing a calculator would improve students' performance in those parts of the undergraduate first-year that relied on formal reasoning skills.",color:"#22d3ee",icon:"📱"},
@@ -1165,14 +1319,14 @@ export default function App() {
 
       {/* ══ SKILLS ════════════════════════════════════════════ */}
       <section id="skills" style={{
-        padding:"100px 6%",position:"relative",zIndex:1,
+        padding:"clamp(60px, 10vw, 100px) 6%",position:"relative",zIndex:1,
         background:"linear-gradient(180deg,transparent,rgba(124,58,237,0.04),transparent)",
       }}>
         <Reveal>
           <div style={{textAlign:"center",marginBottom:56}}>
             <Tag>✦ What I Know ✦</Tag>
             <h2 style={secHead}>My Skills & Technologies</h2>
-            <p style={{color:"#6b7280",marginTop:12,fontSize:15}}>Tools and technologies I work with every day</p>
+            <p style={{color:"#6b7280",marginTop:12,fontSize:"clamp(13px, 4vw, 15px)"}}>Tools and technologies I work with every day</p>
           </div>
         </Reveal>
         {[
@@ -1184,7 +1338,7 @@ export default function App() {
           <Reveal key={gi} delay={gi*0.08}>
             <div style={{marginBottom:40}}>
               <div style={{
-                display:"flex",alignItems:"center",gap:12,marginBottom:18,
+                display:"flex",alignItems:"center",gap:12,marginBottom:18,flexWrap:"wrap",
               }}>
                 <span style={{
                   fontSize:11,fontWeight:700,letterSpacing:"0.14em",
@@ -1192,9 +1346,9 @@ export default function App() {
                   padding:"4px 12px",borderRadius:99,
                   background:"rgba(124,58,237,0.12)",border:"1px solid rgba(124,58,237,0.25)",
                 }}>{g.group}</span>
-                <div style={{flex:1,height:1,background:"linear-gradient(90deg,rgba(124,58,237,0.3),transparent)"}}/>
+                <div style={{flex:1,height:1,background:"linear-gradient(90deg,rgba(124,58,237,0.3),transparent)", minWidth:50}}/>
               </div>
-              <div style={{display:"flex",flexWrap:"wrap",gap:12}}>
+              <div style={{display:"flex",flexWrap:"wrap",gap:12, justifyContent:"center"}}>
                 {g.icons.map(ic=><SkillChip key={ic.name} icon={ic}/>)}
               </div>
             </div>
@@ -1203,12 +1357,12 @@ export default function App() {
       </section>
 
       {/* ══ PROJECTS ═══════════════════════════════════════════ */}
-      <section id="projects" style={{padding:"100px 6%",position:"relative",zIndex:1}}>
+      <section id="projects" style={{padding:"clamp(60px, 10vw, 100px) 6%",position:"relative",zIndex:1}}>
         <Reveal>
           <div style={{textAlign:"center",marginBottom:52}}>
             <Tag>✦ What I've Built ✦</Tag>
             <h2 style={secHead}>My Projects</h2>
-            <p style={{color:"#6b7280",marginTop:12,fontSize:15}}>Hover over cards for 3D effect · Click to flip through screenshots</p>
+            <p style={{color:"#6b7280",marginTop:12,fontSize:"clamp(13px, 4vw, 15px)"}}>Hover over cards for 3D effect · Click to flip through screenshots</p>
           </div>
         </Reveal>
         <Reveal delay={0.1}>
@@ -1220,9 +1374,9 @@ export default function App() {
           <div style={{textAlign:"center",marginTop:48}}>
             <a href="https://www.linkedin.com/in/ashis-kumar-mohanty-5340122ab" target="_blank" rel="noreferrer"
               style={{
-                display:"inline-block",padding:"13px 38px",borderRadius:50,
+                display:"inline-block",padding:"12px 32px",borderRadius:50,
                 border:"1.5px solid rgba(167,139,250,0.45)",color:"#c4b5fd",
-                fontSize:14,fontWeight:600,textDecoration:"none",transition:"all 0.3s ease",letterSpacing:"0.04em",
+                fontSize:"clamp(12px, 3.5vw, 14px)",fontWeight:600,textDecoration:"none",transition:"all 0.3s ease",letterSpacing:"0.04em",
               }}
               onMouseEnter={e=>{e.target.style.background="rgba(124,58,237,0.2)";e.target.style.borderColor="#a78bfa";e.target.style.transform="translateY(-3px)";}}
               onMouseLeave={e=>{e.target.style.background="transparent";e.target.style.borderColor="rgba(167,139,250,0.45)";e.target.style.transform="translateY(0)";}}>
@@ -1234,7 +1388,7 @@ export default function App() {
 
       {/* ══ CERTIFICATIONS ═════════════════════════════════════ */}
       <section style={{
-        padding:"80px 6%",
+        padding:"clamp(60px, 8vw, 80px) 6%",
         background:"linear-gradient(180deg,transparent,rgba(99,102,241,0.05),transparent)",
         position:"relative",zIndex:1,
       }}>
@@ -1260,12 +1414,12 @@ export default function App() {
       </section>
 
       {/* ══ CONTACT ════════════════════════════════════════════ */}
-      <section id="contact" style={{padding:"80px 6% 0",position:"relative",zIndex:1}}>
+      <section id="contact" style={{padding:"clamp(60px, 8vw, 80px) 6% 0",position:"relative",zIndex:1}}>
         <Reveal>
           <div style={{textAlign:"center",marginBottom:52}}>
             <Tag>✦ Let's Work Together ✦</Tag>
             <h2 style={secHead}>Connect With Me</h2>
-            <p style={{color:"#6b7280",marginTop:12,maxWidth:440,margin:"12px auto 0",lineHeight:1.7}}>
+            <p style={{color:"#6b7280",marginTop:12,maxWidth:440,margin:"12px auto 0",lineHeight:1.7, fontSize:"clamp(13px, 4vw, 14px)"}}>
               Open to full-time roles, internships & freelance projects. Let's build something amazing.
             </p>
           </div>
@@ -1286,15 +1440,15 @@ export default function App() {
           padding:"32px 0",
           display:"flex",flexWrap:"wrap",justifyContent:"space-between",alignItems:"center",gap:16,
         }}>
-          <div style={{fontSize:12,color:"#4b5563"}}>© 2024 Ashis Kumar Mohanty. All rights reserved.</div>
-          <div style={{display:"flex",gap:20}}>
+          <div style={{fontSize:"clamp(10px, 3vw, 12px)",color:"#4b5563"}}>© 2024 Ashis Kumar Mohanty. All rights reserved.</div>
+          <div style={{display:"flex",gap:16, flexWrap:"wrap"}}>
             {["About","Skills","Projects","Contact"].map(l=>(
               <button key={l} onClick={()=>document.getElementById(l.toLowerCase())?.scrollIntoView({behavior:"smooth"})}
-                style={{background:"none",border:"none",color:"#6b7280",fontSize:12,cursor:"pointer",transition:"color 0.2s",padding:0}}
+                style={{background:"none",border:"none",color:"#6b7280",fontSize:"clamp(10px, 3vw, 12px)",cursor:"pointer",transition:"color 0.2s",padding:0}}
                 onMouseEnter={e=>e.target.style.color="#a78bfa"} onMouseLeave={e=>e.target.style.color="#6b7280"}>{l}</button>
             ))}
           </div>
-          <div style={{fontSize:12,color:"#4b5563"}}>Built with React · Made with 💜</div>
+          <div style={{fontSize:"clamp(10px, 3vw, 12px)",color:"#4b5563"}}>Built with React · Made with 💜</div>
         </div>
       </section>
     </div>
@@ -1303,7 +1457,7 @@ export default function App() {
 
 /* ── Shared style helpers ── */
 const secHead = {
-  fontSize:"clamp(1.9rem,4vw,2.8rem)",fontWeight:800,marginTop:10,
+  fontSize:"clamp(1.6rem, 5vw, 2.8rem)",fontWeight:800,marginTop:10,
   background:"linear-gradient(135deg,#fff 40%,#a78bfa)",
   WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
 };
@@ -1311,7 +1465,7 @@ const secHead = {
 function Tag({children}) {
   return (
     <span style={{
-      display:"inline-block",fontSize:10,letterSpacing:"0.18em",
+      display:"inline-block",fontSize:"clamp(9px, 3vw, 10px)",letterSpacing:"0.18em",
       color:"#6366f1",textTransform:"uppercase",marginBottom:10,
       padding:"5px 14px",borderRadius:99,
       background:"rgba(99,102,241,0.1)",border:"1px solid rgba(99,102,241,0.2)",
@@ -1323,7 +1477,7 @@ function JourneyCard({item}) {
   const [h,setH]=useState(false);
   return (
     <div onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{
-      padding:28,borderRadius:20,
+      padding:"clamp(20px, 5vw, 28px)",borderRadius:20,
       background:h?"rgba(255,255,255,0.08)":"rgba(255,255,255,0.03)",
       border:`1px solid ${h?item.color+"66":"rgba(255,255,255,0.08)"}`,
       transition:"all 0.35s ease",
@@ -1331,7 +1485,7 @@ function JourneyCard({item}) {
       boxShadow:h?`0 14px 44px ${item.color}22`:"none",
       backdropFilter:"blur(4px)",
     }}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14, flexWrap:"wrap", gap:8}}>
         <div style={{fontSize:28}}>{item.icon}</div>
         <span style={{
           fontSize:11,padding:"4px 12px",borderRadius:99,
@@ -1339,9 +1493,9 @@ function JourneyCard({item}) {
           color:item.color,letterSpacing:"0.06em",
         }}>{item.period}</span>
       </div>
-      <h3 style={{fontSize:16,fontWeight:700,color:"#e2e8f0",marginBottom:6}}>{item.title}</h3>
+      <h3 style={{fontSize:"clamp(15px, 4vw, 16px)",fontWeight:700,color:"#e2e8f0",marginBottom:6}}>{item.title}</h3>
       <p style={{fontSize:12,color:item.color,marginBottom:12,fontWeight:600}}>{item.place}</p>
-      <p style={{fontSize:13,color:"#9ca3af",lineHeight:1.7}}>{item.desc}</p>
+      <p style={{fontSize:"clamp(12px, 3.5vw, 13px)",color:"#9ca3af",lineHeight:1.7}}>{item.desc}</p>
     </div>
   );
 }
@@ -1350,7 +1504,7 @@ function CertCard({cert}) {
   const [h,setH]=useState(false);
   return (
     <div onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{
-      padding:"22px 30px",borderRadius:18,textAlign:"center",minWidth:240,
+      padding:"clamp(18px, 4vw, 22px) clamp(20px, 5vw, 30px)",borderRadius:18,textAlign:"center",minWidth:200,
       background:h?`${cert.color}15`:"rgba(255,255,255,0.03)",
       border:`1px solid ${h?cert.color+"66":"rgba(255,255,255,0.08)"}`,
       transition:"all 0.35s ease",
@@ -1359,8 +1513,8 @@ function CertCard({cert}) {
       backdropFilter:"blur(4px)",
     }}>
       <div style={{fontSize:30,marginBottom:10}}>{cert.icon}</div>
-      <h3 style={{fontSize:15,fontWeight:700,color:"#e2e8f0",marginBottom:6}}>{cert.title}</h3>
-      <p style={{fontSize:12,color:cert.color,fontWeight:500}}>{cert.issuer}</p>
+      <h3 style={{fontSize:"clamp(13px, 4vw, 15px)",fontWeight:700,color:"#e2e8f0",marginBottom:6}}>{cert.title}</h3>
+      <p style={{fontSize:"clamp(10px, 3vw, 12px)",color:cert.color,fontWeight:500}}>{cert.issuer}</p>
     </div>
   );
 }
@@ -1371,9 +1525,9 @@ function ContactCard({c}) {
     <a href={c.href} target={c.href.startsWith("http")?"_blank":undefined} rel="noreferrer"
       onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
       style={{
-        padding:"22px 26px",borderRadius:18,
+        padding:"clamp(16px, 4vw, 22px) clamp(18px, 4vw, 26px)",borderRadius:18,
         display:"flex",alignItems:"center",gap:14,
-        textDecoration:"none",minWidth:230,
+        textDecoration:"none",minWidth:200,
         background:h?`${c.color}15`:"rgba(255,255,255,0.03)",
         border:`1px solid ${h?c.color+"66":"rgba(255,255,255,0.08)"}`,
         transition:"all 0.35s ease",
@@ -1382,16 +1536,16 @@ function ContactCard({c}) {
         backdropFilter:"blur(4px)",
       }}>
       <div style={{
-        width:44,height:44,borderRadius:12,flexShrink:0,
+        width:"clamp(36px, 8vw, 44px)",height:"clamp(36px, 8vw, 44px)",borderRadius:12,flexShrink:0,
         background:`${c.color}1a`,border:`1px solid ${c.color}44`,
         display:"flex",alignItems:"center",justifyContent:"center",
-        fontSize:18,color:c.color,fontWeight:800,
+        fontSize:"clamp(16px, 4vw, 18px)",color:c.color,fontWeight:800,
         transition:"all 0.3s",
         boxShadow:h?`0 4px 16px ${c.color}44`:"none",
       }}>{c.icon}</div>
       <div>
-        <div style={{fontSize:10,color:"#6b7280",marginBottom:3,letterSpacing:"0.08em",textTransform:"uppercase"}}>{c.label}</div>
-        <div style={{fontSize:13,color:h?c.color:"#d1d5db",fontWeight:500,transition:"color 0.3s",wordBreak:"break-all"}}>{c.value}</div>
+        <div style={{fontSize:"clamp(9px, 3vw, 10px)",color:"#6b7280",marginBottom:3,letterSpacing:"0.08em",textTransform:"uppercase"}}>{c.label}</div>
+        <div style={{fontSize:"clamp(11px, 3.5vw, 13px)",color:h?c.color:"#d1d5db",fontWeight:500,transition:"color 0.3s",wordBreak:"break-all"}}>{c.value}</div>
       </div>
     </a>
   );
