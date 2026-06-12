@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function ContactCard({ c }) {
+export function ContactCard({ c, isDayMode }) {
   const [h, setH] = useState(false);
 
   return (
@@ -18,12 +18,16 @@ export function ContactCard({ c }) {
         gap: 14,
         textDecoration: "none",
         minWidth: 200,
-        background: h ? `${c.color}15` : "rgba(255,255,255,0.03)",
-        border: `1px solid ${h ? c.color + "66" : "rgba(255,255,255,0.08)"}`,
+        background: h
+          ? isDayMode ? `${c.color}22` : `${c.color}15`
+          : isDayMode ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.03)",
+        border: isDayMode
+          ? `1px solid ${h ? c.color + "aa" : "rgba(0,0,0,0.15)"}`
+          : `1px solid ${h ? c.color + "66" : "rgba(255,255,255,0.08)"}`,
         transition: "all 0.35s ease",
         transform: h ? "translateY(-5px)" : "translateY(0)",
-        boxShadow: h ? `0 12px 36px ${c.color}22` : "none",
-        backdropFilter: "blur(4px)",
+        boxShadow: h ? (isDayMode ? `0 12px 36px rgba(0,0,0,0.1)` : `0 12px 36px ${c.color}22`) : "none",
+        backdropFilter: isDayMode ? "none" : "blur(4px)",
       }}
     >
       <div
@@ -32,8 +36,8 @@ export function ContactCard({ c }) {
           height: "clamp(36px, 8vw, 44px)",
           borderRadius: 12,
           flexShrink: 0,
-          background: `${c.color}1a`,
-          border: `1px solid ${c.color}44`,
+          background: isDayMode ? `${c.color}33` : `${c.color}1a`,
+          border: `1px solid ${isDayMode ? c.color + "99" : c.color + "44"}`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -41,7 +45,7 @@ export function ContactCard({ c }) {
           color: c.color,
           fontWeight: 800,
           transition: "all 0.3s",
-          boxShadow: h ? `0 4px 16px ${c.color}44` : "none",
+          boxShadow: h ? (isDayMode ? `0 4px 16px ${c.color}66` : `0 4px 16px ${c.color}44`) : "none",
         }}
       >
         {c.icon}
@@ -50,7 +54,7 @@ export function ContactCard({ c }) {
         <div
           style={{
             fontSize: "clamp(9px, 3vw, 10px)",
-            color: "#6b7280",
+            color: isDayMode ? "#64748b" : "#6b7280",
             marginBottom: 3,
             letterSpacing: "0.08em",
             textTransform: "uppercase",
@@ -61,7 +65,7 @@ export function ContactCard({ c }) {
         <div
           style={{
             fontSize: "clamp(11px, 3.5vw, 13px)",
-            color: h ? c.color : "#d1d5db",
+            color: h ? c.color : (isDayMode ? "#1e293b" : "#d1d5db"),
             fontWeight: 500,
             transition: "color 0.3s",
             wordBreak: "break-all",

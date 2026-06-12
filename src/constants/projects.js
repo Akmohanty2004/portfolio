@@ -5,7 +5,7 @@ export const PROJECTS = [
     color: "#a855f7",
     glow: "#a855f733",
     desc: "A classic Snake game built with Java Swing featuring smooth controls, collision detection, dynamic score tracking, and increasing difficulty levels with responsive retro graphics.",
-    hasSnake: true,
+    
     images: [
       "https://assets.unlayer.com/projects/0/1781035141222-55ff7ad7-b255-468f-a917-ff6c1e963cc8.png",
       "https://miro.medium.com/0*i7T-_4joOwUrIcKT.png",

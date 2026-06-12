@@ -3,7 +3,7 @@ import { ProjectCard } from "../cards/ProjectCard";
 import { NavBtn } from "../ui/NavBtn";
 import { PROJECTS } from "../../constants/projects";
 
-export function ProjectsCarousel() {
+export function ProjectsCarousel({ isDayMode }) {
   const [curr, setCurr] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -42,7 +42,7 @@ export function ProjectsCarousel() {
         >
           {PROJECTS.map((p, i) => (
             <div key={i} style={{ minWidth: "100%", padding: "0 4px" }}>
-              <ProjectCard proj={p} idx={i} />
+              <ProjectCard proj={p} idx={i} isDayMode={isDayMode} />
             </div>
           ))}
         </div>
@@ -57,7 +57,7 @@ export function ProjectsCarousel() {
           marginTop: 24,
         }}
       >
-        <NavBtn onClick={prev} dir="left" />
+        <NavBtn onClick={prev} dir="left" isDayMode={isDayMode} />
         <div style={{ display: "flex", gap: 8 }}>
           {PROJECTS.map((_, i) => (
             <button
@@ -71,15 +71,19 @@ export function ProjectsCarousel() {
                 cursor: "pointer",
                 background:
                   i === curr
-                    ? `linear-gradient(90deg,${PROJECTS[i].color},${PROJECTS[(i + 1) % total].color})`
-                    : "rgba(255,255,255,0.15)",
+                    ? isDayMode
+                      ? `linear-gradient(90deg,${PROJECTS[i].color},${PROJECTS[(i + 1) % total].color})`
+                      : `linear-gradient(90deg,${PROJECTS[i].color},${PROJECTS[(i + 1) % total].color})`
+                    : isDayMode
+                      ? "rgba(0,0,0,0.2)"
+                      : "rgba(255,255,255,0.15)",
                 transition: "all 0.4s cubic-bezier(.34,1.56,.64,1)",
                 padding: 0,
               }}
             />
           ))}
         </div>
-        <NavBtn onClick={next} dir="right" />
+        <NavBtn onClick={next} dir="right" isDayMode={isDayMode} />
       </div>
 
       <div
@@ -115,7 +119,7 @@ export function ProjectsCarousel() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  background: "#050014",
+                  background: isDayMode ? "#fef9c3" : "#050014",
                   fontSize: 22,
                 }}
               >

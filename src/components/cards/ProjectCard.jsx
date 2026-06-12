@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { SnakePreview } from "../snake/SnakePreview";
 
-export function ProjectCard({ proj, idx }) {
+export function ProjectCard({ proj, idx, isDayMode }) {
   const [imgIdx, setImgIdx] = useState(0);
   const [flipping, setFlipping] = useState(false);
   const [showSnake, setShowSnake] = useState(proj.hasSnake);
@@ -67,6 +67,8 @@ export function ProjectCard({ proj, idx }) {
     }, 400);
   };
 
+  const iconMap = ["🐍", "🏠", "🗑️", "👁️"];
+
   return (
     <div
       ref={cardRef}
@@ -76,17 +78,29 @@ export function ProjectCard({ proj, idx }) {
       style={{
         borderRadius: 24,
         background: hov
-          ? `linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))`
-          : `linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))`,
-        border: `1.5px solid ${hov ? proj.color + "88" : "rgba(255,255,255,0.1)"}`,
+          ? isDayMode
+            ? `linear-gradient(145deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7))`
+            : `linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))`
+          : isDayMode
+            ? `linear-gradient(145deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6))`
+            : `linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))`,
+        border: isDayMode
+          ? `1.5px solid ${hov ? proj.color + "aa" : "rgba(0,0,0,0.15)"}`
+          : `1.5px solid ${hov ? proj.color + "88" : "rgba(255,255,255,0.1)"}`,
         transform: hov
           ? `translateY(-14px) scale(1.02) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
           : "translateY(0) scale(1) perspective(1000px) rotateX(0deg) rotateY(0deg)",
         transition: "transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.3s",
-        boxShadow: hov ? `0 30px 80px ${proj.glow}, 0 0 0 1px ${proj.color}44` : "0 8px 32px rgba(0,0,0,0.4)",
+        boxShadow: hov 
+          ? isDayMode
+            ? `0 30px 80px rgba(0,0,0,0.15), 0 0 0 1px ${proj.color}66`
+            : `0 30px 80px ${proj.glow}, 0 0 0 1px ${proj.color}44`
+          : isDayMode
+            ? "0 8px 32px rgba(0,0,0,0.1)"
+            : "0 8px 32px rgba(0,0,0,0.4)",
         overflow: "hidden",
         cursor: "pointer",
-        backdropFilter: "blur(4px)",
+        backdropFilter: isDayMode ? "none" : "blur(4px)",
       }}
     >
       <div
@@ -94,7 +108,7 @@ export function ProjectCard({ proj, idx }) {
           position: "relative",
           height: 350,
           overflow: "hidden",
-          background: "rgba(5,0,20,0.5)",
+          background: isDayMode ? "rgba(255,255,255,0.5)" : "rgba(5,0,20,0.5)",
         }}
         onClick={nextImg}
       >
@@ -114,7 +128,7 @@ export function ProjectCard({ proj, idx }) {
               <SnakePreview />
             </div>
           ) : (
-            <div style={{ width: "100%", height: "100%", position: "relative", background: "#0a0a1a" }}>
+            <div style={{ width: "100%", height: "100%", position: "relative", background: isDayMode ? "#fef9c3" : "#0a0a1a" }}>
               {!loadedImages[imgIdx] && (
                 <div
                   style={{
@@ -124,7 +138,7 @@ export function ProjectCard({ proj, idx }) {
                     alignItems: "center",
                     justifyContent: "center",
                     background: "rgba(0,0,0,0.5)",
-                    color: "#a78bfa",
+                    color: isDayMode ? "#d97706" : "#a78bfa",
                     fontSize: 14,
                   }}
                 >
@@ -150,7 +164,9 @@ export function ProjectCard({ proj, idx }) {
             style={{
               position: "absolute",
               inset: 0,
-              background: `linear-gradient(to bottom, transparent 30%, rgba(5,0,30,0.95))`,
+              background: isDayMode
+                ? `linear-gradient(to bottom, transparent 30%, rgba(255,255,255,0.9))`
+                : `linear-gradient(to bottom, transparent 30%, rgba(5,0,30,0.95))`,
             }}
           />
         </div>
@@ -161,8 +177,8 @@ export function ProjectCard({ proj, idx }) {
             bottom: 10,
             right: 12,
             fontSize: 11,
-            color: "rgba(255,255,255,0.5)",
-            background: "rgba(0,0,0,0.5)",
+            color: isDayMode ? "#475569" : "rgba(255,255,255,0.5)",
+            background: isDayMode ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.5)",
             padding: "3px 8px",
             borderRadius: 20,
             backdropFilter: "blur(4px)",
@@ -190,7 +206,7 @@ export function ProjectCard({ proj, idx }) {
                   width: i === imgIdx ? 18 : 6,
                   height: 6,
                   borderRadius: 3,
-                  background: i === imgIdx ? proj.color : "rgba(255,255,255,0.3)",
+                  background: i === imgIdx ? proj.color : (isDayMode ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)"),
                   transition: "all 0.3s ease",
                 }}
               />
@@ -206,9 +222,9 @@ export function ProjectCard({ proj, idx }) {
             fontSize: 10,
             padding: "4px 10px",
             borderRadius: 20,
-            background: `${proj.color}22`,
-            border: `1px solid ${proj.color}55`,
-            color: proj.color,
+            background: isDayMode ? `${proj.color}33` : `${proj.color}22`,
+            border: `1px solid ${isDayMode ? proj.color + "99" : proj.color + "55"}`,
+            color: isDayMode ? proj.color : proj.color,
             letterSpacing: "0.06em",
             fontWeight: 600,
             backdropFilter: "blur(8px)",
@@ -233,8 +249,8 @@ export function ProjectCard({ proj, idx }) {
                 height: 28,
                 borderRadius: "50%",
                 border: "none",
-                background: "rgba(0,0,0,0.6)",
-                color: "#fff",
+                background: isDayMode ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)",
+                color: isDayMode ? "#1e293b" : "#fff",
                 cursor: "pointer",
                 fontSize: 14,
                 display: "flex",
@@ -243,8 +259,8 @@ export function ProjectCard({ proj, idx }) {
                 backdropFilter: "blur(4px)",
                 transition: "background 0.2s",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = `${proj.color}88`)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.6)")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = isDayMode ? proj.color : `${proj.color}88`)}
+              onMouseLeave={(e) => (e.currentTarget.style.background = isDayMode ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)")}
             >
               ‹
             </button>
@@ -262,8 +278,8 @@ export function ProjectCard({ proj, idx }) {
                 height: 28,
                 borderRadius: "50%",
                 border: "none",
-                background: "rgba(0,0,0,0.6)",
-                color: "#fff",
+                background: isDayMode ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)",
+                color: isDayMode ? "#1e293b" : "#fff",
                 cursor: "pointer",
                 fontSize: 14,
                 display: "flex",
@@ -272,8 +288,8 @@ export function ProjectCard({ proj, idx }) {
                 backdropFilter: "blur(4px)",
                 transition: "background 0.2s",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = `${proj.color}88`)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.6)")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = isDayMode ? proj.color : `${proj.color}88`)}
+              onMouseLeave={(e) => (e.currentTarget.style.background = isDayMode ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)")}
             >
               ›
             </button>
@@ -281,15 +297,15 @@ export function ProjectCard({ proj, idx }) {
         )}
       </div>
 
-      <div style={{ padding: "20px 22px 24px", background: "rgba(5,0,20,0.3)" }}>
+      <div style={{ padding: "20px 22px 24px", background: isDayMode ? "rgba(255,255,255,0.6)" : "rgba(5,0,20,0.3)" }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 10 }}>
           <div
             style={{
               width: 36,
               height: 36,
               borderRadius: 10,
-              background: `linear-gradient(135deg,${proj.color}44,${proj.color}22)`,
-              border: `1px solid ${proj.color}44`,
+              background: isDayMode ? `linear-gradient(135deg,${proj.color}66,${proj.color}33)` : `linear-gradient(135deg,${proj.color}44,${proj.color}22)`,
+              border: `1px solid ${isDayMode ? proj.color + "99" : proj.color + "44"}`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -297,7 +313,7 @@ export function ProjectCard({ proj, idx }) {
               flexShrink: 0,
             }}
           >
-            {idx === 0 ? "🐍" : idx === 1 ? "🏠" : idx === 2 ? "🗑️" : "👁️"}
+            {iconMap[idx]}
           </div>
           <h3
             style={{
@@ -305,15 +321,17 @@ export function ProjectCard({ proj, idx }) {
               fontWeight: 800,
               margin: 0,
               lineHeight: 1.3,
-              background: `linear-gradient(135deg,#fff 50%,${proj.color})`,
+              color: isDayMode ? "#ff8800d5" : "#3c00ffe3",
               WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              
             }}
           >
             {proj.title}
           </h3>
         </div>
-        <p style={{ fontSize: 13, lineHeight: 1.7, color: "#9ca3af", margin: 0 }}>{proj.desc}</p>
+        <p style={{ fontSize: 13, lineHeight: 1.7, color: isDayMode ? "#475569" : "#9ca3af", margin: 0 }}>
+          {proj.desc}
+        </p>
       </div>
     </div>
   );

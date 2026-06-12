@@ -4,8 +4,9 @@ import { SvgIcon } from "../ui/SvgIcon";
 import { Typewriter } from "../ui/Typewriter";
 import { BlackHoleCanvas } from "../layout/BlackHoleCanvas";
 import { ProfileSection } from "./ProfileSection";
+import { DayModeElements } from "./DayModeElements";
 
-export function Hero() {
+export function Hero({ isDayMode }) {
   return (
     <section
       id="hero"
@@ -18,18 +19,27 @@ export function Hero() {
         overflow: "hidden",
       }}
     >
-      <div style={{ position: "absolute", inset: 0, zIndex: 1 }}>
-        <BlackHoleCanvas />
-      </div>
+      {/* Show BlackHoleCanvas only in night mode */}
+      {!isDayMode && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 1 }}>
+          <BlackHoleCanvas />
+        </div>
+      )}
 
+      {/* Day Mode Elements */}
+      {isDayMode && <DayModeElements />}
+
+      {/* Background Gradients */}
       <div
         style={{
           position: "absolute",
-          width: 600,
-          height: 600,
+          width: isDayMode ? 400 : 600,
+          height: isDayMode ? 400 : 600,
           borderRadius: "50%",
-          filter: "blur(120px)",
-          background: "radial-gradient(circle,#7c3aed33,transparent 70%)",
+          filter: `blur(${isDayMode ? "80px" : "120px"})`,
+          background: isDayMode
+            ? "radial-gradient(circle,#fef08a33,transparent 70%)"
+            : "radial-gradient(circle,#7c3aed33,transparent 70%)",
           top: "-20%",
           left: "10%",
           animation: "pulse 9s ease-in-out infinite",
@@ -39,11 +49,13 @@ export function Hero() {
       <div
         style={{
           position: "absolute",
-          width: 400,
-          height: 400,
+          width: isDayMode ? 300 : 400,
+          height: isDayMode ? 300 : 400,
           borderRadius: "50%",
-          filter: "blur(100px)",
-          background: "radial-gradient(circle,#4f46e533,transparent 70%)",
+          filter: `blur(${isDayMode ? "60px" : "100px"})`,
+          background: isDayMode
+            ? "radial-gradient(circle,#fde04733,transparent 70%)"
+            : "radial-gradient(circle,#4f46e533,transparent 70%)",
           bottom: "5%",
           left: "-5%",
           animation: "pulse 7s ease-in-out infinite 2s",
@@ -51,6 +63,7 @@ export function Hero() {
         }}
       />
 
+      {/* Floating Icons - Day mode colors adjusted */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2 }}>
         {FLOATS.map((ic, i) => {
           const sk = SKILLS.find((s) => s.name === ic.k);
@@ -65,15 +78,17 @@ export function Hero() {
                 height: ic.size,
                 borderRadius: 16,
                 padding: 9,
-                background: "rgba(255,255,255,0.055)",
-                border: "1px solid rgba(255,255,255,0.13)",
+                background: isDayMode ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.055)",
+                border: isDayMode ? "1px solid rgba(0,0,0,0.1)" : "1px solid rgba(255,255,255,0.13)",
                 backdropFilter: "blur(10px)",
                 animation: `${ic.anim} ${3.2 + i * 0.35}s ease-in-out infinite`,
                 animationDelay: `${ic.d}s`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: `0 4px 20px ${sk?.color || "#7c3aed"}33`,
+                boxShadow: isDayMode
+                  ? `0 4px 20px ${sk?.color || "#eab308"}44`
+                  : `0 4px 20px ${sk?.color || "#7c3aed"}33`,
               }}
             >
               {sk && <SvgIcon svg={sk.svg} size={ic.size - 18} />}
@@ -83,7 +98,7 @@ export function Hero() {
       </div>
 
       <div style={{ position: "relative", zIndex: 3, maxWidth: 680, margin: "0 auto", width: "100%" }}>
-        <ProfileSection />
+        <ProfileSection isDayMode={isDayMode} />
 
         <div
           style={{
@@ -92,10 +107,10 @@ export function Hero() {
             gap: 8,
             padding: "6px 18px",
             borderRadius: 99,
-            background: "rgba(124,58,237,0.18)",
-            border: "1px solid rgba(167,139,250,0.4)",
+            background: isDayMode ? "rgba(234,179,8,0.15)" : "rgba(124,58,237,0.18)",
+            border: isDayMode ? "1px solid rgba(234,179,8,0.4)" : "1px solid rgba(167,139,250,0.4)",
             fontSize: 11,
-            color: "#c4b5fd",
+            color: isDayMode ? "#d97706" : "#c4b5fd",
             marginBottom: 26,
             animation: "slideUp 0.9s ease both",
             letterSpacing: "0.08em",
@@ -108,7 +123,7 @@ export function Hero() {
               width: 7,
               height: 7,
               borderRadius: "50%",
-              background: "#a78bfa",
+              background: isDayMode ? "#eab308" : "#a78bfa",
               display: "inline-block",
               animation: "pulse 2s ease-in-out infinite",
             }}
@@ -124,22 +139,19 @@ export function Hero() {
             marginBottom: 22,
             animation: "slideUp 0.9s ease 0.1s both",
             textAlign: "center",
+            color: isDayMode ? "#1e293b" : "#fff",
           }}
         >
           Providing the{" "}
           <span
             style={{
-              background: "linear-gradient(135deg,#a78bfa,#60a5fa,#f472b6,#a78bfa)",
-              backgroundSize: "300% 300%",
-              animation: "gradShift 4s ease infinite",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              background:"linear-gradient(135deg,#eab308,#f59e0b,#f97316,#eab308)" , backgroundSize: "300% 300%", animation: "gradShift 4s ease infinite", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             }}
           >
             best
           </span>
           <br />
-          <span style={{ display: "inline-block" }}>
+          <span style={{ display: "inline-block", color: isDayMode ? "#475569" : "inherit" }}>
             <Typewriter words={["project experience.", "software solutions.", "creative ideas.", "web applications."]} />
           </span>
         </h1>
@@ -148,13 +160,13 @@ export function Hero() {
           style={{
             fontSize: "clamp(13px, 4vw, 15px)",
             lineHeight: 1.7,
-            color: "#94a3b8",
+            color: isDayMode ? "#475569" : "#94a3b8",
             marginBottom: 38,
             animation: "slideUp 0.9s ease 0.2s both",
             textAlign: "center",
           }}
         >
-          I'm <strong style={{ color: "#e2e8f0", fontWeight: 700 }}>Ashis Kumar Mohanty</strong> — B.Tech CSE (2026) &
+          I'm <strong style={{ color: isDayMode ? "#1e293b" : "#e2e8f0", fontWeight: 700 }}>Ashis Kumar Mohanty</strong> — B.Tech CSE (2026) &
           Full Stack Engineer. Passionate about building impactful, pixel-perfect web applications.
         </p>
 
@@ -173,22 +185,24 @@ export function Hero() {
               padding: "12px 24px",
               borderRadius: 50,
               border: "none",
-              background: "linear-gradient(135deg,#7c3aed,#4f46e5)",
-              color: "#fff",
+              background: isDayMode
+                ? "linear-gradient(135deg,#eab308,#f59e0b)"
+                : "linear-gradient(135deg,#7c3aed,#4f46e5)",
+              color: isDayMode ? "#1e293b" : "#fff",
               fontWeight: 700,
               fontSize: "clamp(12px, 3.5vw, 14px)",
               cursor: "pointer",
               transition: "all 0.3s ease",
-              boxShadow: "0 6px 24px #7c3aed55",
+              boxShadow: isDayMode ? "0 6px 24px #eab30855" : "0 6px 24px #7c3aed55",
               letterSpacing: "0.04em",
             }}
             onMouseEnter={(e) => {
               e.target.style.transform = "translateY(-3px)";
-              e.target.style.boxShadow = "0 12px 36px #7c3aed88";
+              e.target.style.boxShadow = isDayMode ? "0 12px 36px #eab30888" : "0 12px 36px #7c3aed88";
             }}
             onMouseLeave={(e) => {
               e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow = "0 6px 24px #7c3aed55";
+              e.target.style.boxShadow = isDayMode ? "0 6px 24px #eab30855" : "0 6px 24px #7c3aed55";
             }}
           >
             View Projects ↓
@@ -198,8 +212,8 @@ export function Hero() {
             style={{
               padding: "12px 24px",
               borderRadius: 50,
-              border: "1.5px solid rgba(167,139,250,0.45)",
-              color: "#c4b5fd",
+              border: isDayMode ? "1.5px solid rgba(234,179,8,0.5)" : "1.5px solid rgba(167,139,250,0.45)",
+              color: isDayMode ? "#d97706" : "#c4b5fd",
               fontWeight: 600,
               fontSize: "clamp(12px, 3.5vw, 14px)",
               textDecoration: "none",
@@ -208,13 +222,13 @@ export function Hero() {
               display: "inline-block",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(124,58,237,0.18)";
-              e.currentTarget.style.borderColor = "#a78bfa";
+              e.currentTarget.style.background = isDayMode ? "rgba(234,179,8,0.15)" : "rgba(124,58,237,0.18)";
+              e.currentTarget.style.borderColor = isDayMode ? "#eab308" : "#a78bfa";
               e.currentTarget.style.transform = "translateY(-3px)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.borderColor = "rgba(167,139,250,0.45)";
+              e.currentTarget.style.borderColor = isDayMode ? "rgba(234,179,8,0.5)" : "rgba(167,139,250,0.45)";
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
@@ -230,6 +244,7 @@ export function Hero() {
             marginTop: 44,
             animation: "slideUp 0.9s ease 0.45s both",
             flexWrap: "wrap",
+             color: isDayMode ?  "#f3a811e3" : "#1511f3e3",
           }}
         >
           {[
@@ -242,14 +257,15 @@ export function Hero() {
                 style={{
                   fontSize: "clamp(1.5rem, 5vw, 1.8rem)",
                   fontWeight: 900,
-                  background: "linear-gradient(135deg,#a78bfa,#60a5fa)",
+                 
                   WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
+                  
+                  
                 }}
               >
                 {s.n}
               </div>
-              <div style={{ fontSize: "clamp(10px, 3vw, 11px)", color: "#6b7280", letterSpacing: "0.08em", marginTop: 2 }}>
+              <div style={{ fontSize: "clamp(10px, 3vw, 11px)", color: isDayMode ? "#64748b" : "#6b7280", letterSpacing: "0.08em", marginTop: 2 }}>
                 {s.l}
               </div>
             </div>

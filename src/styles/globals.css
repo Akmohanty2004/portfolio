@@ -12,7 +12,6 @@ html {
 
 body {
   overflow-x: hidden;
-  background: #030010;
 }
 
 /* Keyframes */
@@ -88,21 +87,60 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+@keyframes sunGlow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes birdFly {
+  0% { transform: translateX(-100px) translateY(0px); }
+  25% { transform: translateX(-50px) translateY(-20px); }
+  50% { transform: translateX(0px) translateY(0px); }
+  75% { transform: translateX(50px) translateY(-15px); }
+  100% { transform: translateX(100px) translateY(0px); }
+}
+
+@keyframes birdFly2 {
+  0% { transform: translateX(100vw) translateY(20px); }
+  25% { transform: translateX(70vw) translateY(-10px); }
+  50% { transform: translateX(40vw) translateY(10px); }
+  75% { transform: translateX(20vw) translateY(-5px); }
+  100% { transform: translateX(-100px) translateY(0px); }
+}
+
+@keyframes cloudFloat {
+  0% { transform: translateX(-100px); }
+  100% { transform: translateX(100vw); }
+}
+
+@keyframes cloudFloat2 {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100px); }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #030010;
+  background: #e2e8f0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(#7c3aed, #4f46e5);
+  background: linear-gradient(#eab308, #f59e0b);
   border-radius: 4px;
 }
 
-/* Matrix Background */
+.night-mode::-webkit-scrollbar-track {
+  background: #030010;
+}
+
+.night-mode::-webkit-scrollbar-thumb {
+  background: linear-gradient(#7c3aed, #4f46e5);
+}
+
+/* Matrix Background - Night Mode Only */
 .matrix-bg {
   position: fixed;
   top: 0;
@@ -117,6 +155,71 @@ body {
   animation: matrix 20s linear infinite;
 }
 
+/* Day Mode Specific */
+.sun-glow {
+  animation: sunGlow 3s ease-in-out infinite;
+}
+
+.bird {
+  position: fixed;
+  z-index: 10;
+  pointer-events: none;
+  font-size: 24px;
+}
+
+.bird-1 {
+  animation: birdFly 8s linear infinite;
+  top: 15%;
+}
+
+.bird-2 {
+  animation: birdFly2 10s linear infinite;
+  top: 25%;
+}
+
+.bird-3 {
+  animation: birdFly 12s linear infinite;
+  top: 40%;
+  animation-delay: 2s;
+}
+
+.bird-4 {
+  animation: birdFly2 9s linear infinite;
+  top: 55%;
+  animation-delay: 4s;
+}
+
+.cloud {
+  position: fixed;
+  z-index: 5;
+  pointer-events: none;
+  font-size: 60px;
+  opacity: 0.6;
+}
+
+.cloud-1 {
+  animation: cloudFloat 25s linear infinite;
+  top: 10%;
+}
+
+.cloud-2 {
+  animation: cloudFloat2 30s linear infinite;
+  top: 30%;
+  animation-delay: 5s;
+}
+
+.cloud-3 {
+  animation: cloudFloat 20s linear infinite;
+  top: 60%;
+  animation-delay: 10s;
+}
+
+.cloud-4 {
+  animation: cloudFloat2 35s linear infinite;
+  top: 80%;
+  animation-delay: 15s;
+}
+
 /* Canvas RoundRect Helper */
 canvas {
   display: block;
@@ -129,5 +232,8 @@ canvas {
   }
   .mobile-menu-btn {
     display: flex !important;
+  }
+  .bird, .cloud {
+    display: none;
   }
 }
